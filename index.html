@@ -165,6 +165,18 @@
     .learning-strip b{display:block;font-size:18px;color:#ad8aff;margin-bottom:4px}
     .history-list{display:grid;gap:10px;margin-top:14px}
     .history-item{border:1px solid var(--line);border-radius:12px;background:#100d18;padding:12px}
+    .habit-matrix{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#0d0a13;margin-top:14px}
+    .habit-table{min-width:980px;display:grid;grid-template-columns:190px repeat(31,30px);gap:1px;background:var(--line)}
+    .habit-cell{min-height:30px;background:#120f1a;display:grid;place-items:center;font:700 10px/1 var(--mono);color:#a99bc0;border:0}
+    .habit-cell.name{justify-content:start;text-align:left;padding:8px;font-family:var(--font);font-size:12px;line-height:1.25;color:#f7f3ff;position:sticky;left:0;z-index:2;background:#171321}
+    .habit-cell.day-head{color:#8d7fa4;background:#171321}
+    .habit-cell.score-1{background:#100b18;color:#5f5472}.habit-cell.score-2{background:#211435;color:#8d7fa4}.habit-cell.score-3{background:#3a2361;color:#c8b7ea}.habit-cell.score-4{background:#6540a8;color:#f0e8ff}.habit-cell.score-5{background:#d9caff;color:#170d24}
+    .habit-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+    .habit-summary div{border:1px solid var(--line);border-radius:12px;background:#100d18;padding:12px}
+    .goal-card{border:1px solid var(--line);border-radius:14px;background:#12101a;padding:16px;display:grid;gap:12px}
+    .goal-card .goal-title{display:flex;justify-content:space-between;gap:12px;align-items:start}
+    details.evidence{border:1px solid var(--line);border-radius:12px;background:#0d0a13;padding:12px}
+    details.evidence summary{cursor:pointer;font-weight:800;color:#f7f3ff}
     .entry-list{display:grid;gap:14px}
     .entry{border:1px solid var(--line);background:rgba(18,16,26,.95);border-radius:14px;padding:16px;display:grid;gap:12px}
     .entry-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
@@ -278,6 +290,13 @@
           <div class="small" id="homeGoalText" style="margin-top:10px;font-family:var(--mono)">No target set yet</div>
         </div>
 
+        <div class="card" style="margin-top:20px">
+          <div class="row" style="justify-content:space-between">
+            <div><h3 style="margin:0">Goal command center</h3><p class="small" style="margin-top:4px">Edit goals here or in the Goals tab. Same data, same trajectory.</p></div>
+            <button class="btn" data-view="goals">Open goals</button>
+          </div>
+          <div id="homeGoalsPanel" class="grid two" style="margin-top:16px"></div>
+        </div>
         <div class="shortcut-grid">
           <button class="shortcut" data-view="calendar"><strong><span data-icon="calendar"></span>Calendar</strong><span>Trading days, gym, courses, meals, work - all in one view.</span></button>
           <button class="shortcut" data-view="income"><strong><span data-icon="dollar"></span>Income</strong><span>Log what came in and went out, net by month.</span></button>
@@ -461,15 +480,43 @@
       </section>
 
       <section class="view" id="view-habits">
-        <div class="page-head"><div class="eyebrow">Habits</div><h2>Discipline scoreboard.</h2><p class="desc">Rate today 1-5. These ratings feed the AI profile so it can spot behavior patterns around wins and losses.</p></div>
-        <div class="card" id="habitBox"></div>
+        <div class="page-head"><div class="eyebrow">Habits</div><h2>Monthly discipline grid.</h2><p class="desc">Each square is one habit on one day. 1 is darkest, 5 is brightest. Click any square to edit that day, even if it is in the past.</p></div>
+        <div class="card">
+          <div class="row" style="justify-content:space-between">
+            <div>
+              <h3 id="habitMonthTitle" style="margin:0">This month</h3>
+              <p class="small" style="margin-top:4px">Today resets automatically when a new day starts, but past days stay editable.</p>
+            </div>
+            <div class="row">
+              <button class="btn" id="habitPrevMonth">Previous</button>
+              <button class="btn" id="habitThisMonth">This month</button>
+              <button class="btn" id="habitNextMonth">Next</button>
+            </div>
+          </div>
+          <div class="habit-summary" id="habitSummary"></div>
+          <div class="habit-matrix"><div class="habit-table" id="habitGrid"></div></div>
+          <div class="analysis" id="habitInsight" style="margin-top:14px"></div>
+          <div id="habitBox" style="display:none"></div>
+        </div>
       </section>
-
       <section class="view" id="view-goals">
         <div class="page-head"><div class="eyebrow">Goals</div><h2>Targets with trajectory.</h2><p class="desc">Track eval progress, weight, checkpoints, and whether the trendline says you are speeding up or drifting.</p></div>
         <div class="grid two">
           <div class="card"><h3 style="margin-top:0">Eval goal</h3><div class="row"><input id="goalTarget" type="number" placeholder="Target profit"><input id="goalCurrent" type="number" placeholder="Current profit"><input id="goalDeadline" type="date" style="max-width:170px"></div><div class="progress" style="margin-top:14px"><span id="goalFill"></span></div><div class="small" id="goalText" style="margin-top:10px;font-family:var(--mono)">No target set yet</div><div class="learning-strip"><div><b id="goalRemaining">$0</b><span class="small">Remaining</span></div><div><b id="goalDailyPace">$0</b><span class="small">Daily pace</span></div><div><b id="goalProbability">0%</b><span class="small">Pass pressure</span></div><div><b id="goalDaysLeft">-</b><span class="small">Days left</span></div></div><svg class="sparkline" id="goalSpark" viewBox="0 0 600 120" preserveAspectRatio="none"></svg><div class="analysis" id="goalInsight" style="margin-top:14px"></div><button class="btn primary" id="saveGoalBtn" style="margin-top:12px">Save checkpoint</button></div>
           <div class="card"><h3 style="margin-top:0">Weight and discipline goal</h3><div class="row"><input id="weightCurrent" type="number" placeholder="Current weight"><input id="weightTarget" type="number" placeholder="Target weight"><input id="goalFocus" placeholder="Focus, e.g. 30 carnivore days"></div><div class="progress" style="margin-top:14px"><span id="weightFill"></span></div><div class="small" id="weightText" style="margin-top:10px;font-family:var(--mono)">No weight goal set yet</div><svg class="sparkline" id="weightSpark" viewBox="0 0 600 120" preserveAspectRatio="none"></svg><div class="analysis" id="weightInsight" style="margin-top:14px"></div><button class="btn primary" id="saveWeightBtn" style="margin-top:12px">Save checkpoint</button></div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h3 style="margin-top:0">Add a custom goal</h3>
+          <p class="small">Tradecrow calculates required pace and creates a simple action plan. Use units like $, lbs, days, hours, or reps.</p>
+          <div class="grid three" style="margin-top:14px">
+            <input id="customGoalName" placeholder="Goal name, e.g. Pass 50K eval">
+            <input id="customGoalCurrent" type="number" placeholder="Current value">
+            <input id="customGoalTarget" type="number" placeholder="Target value">
+            <input id="customGoalUnit" placeholder="Unit, e.g. $, lbs, days">
+            <input id="customGoalDeadline" type="date">
+            <button class="btn primary" id="addCustomGoalBtn">Add goal</button>
+          </div>
+          <div id="customGoalList" class="grid two" style="margin-top:16px"></div>
         </div>
       </section>
 
@@ -593,7 +640,6 @@
       "No doom scrolling",
       "Deep work block",
       "Sleep routine",
-      "Morning hygiene",
       "Budget discipline",
       "Kept promises today",
       "Pre-market plan",
@@ -612,13 +658,14 @@
     let cloudItemId = "";
     let cloudSaveTimer = null;
     let cloudLoading = false;
+    let habitMonthCursor = new Date();
 
     function load(){
       try{return JSON.parse(localStorage.getItem(STORE)) || blank();}
       catch{return blank();}
     }
     function blank(){
-      return {trades:[],setupReads:[],rules:[],days:{},goal:{history:[]},weight:{history:[]},events:[],money:[],habits:{},trophies:[],aiModels:"",drafts:{},currentDay:""};
+      return {trades:[],setupReads:[],rules:[],days:{},goal:{history:[]},weight:{history:[]},customGoals:[],events:[],money:[],habits:{},trophies:[],aiModels:"",drafts:{},currentDay:""};
     }
     function ensureState(){
       state.trades ||= [];
@@ -628,6 +675,7 @@
       state.goal ||= {};
       state.goal.history ||= [];
       state.weight ||= {};
+      state.customGoals ||= [];
       state.weight.history ||= [];
       state.events ||= [];
       state.money ||= [];
@@ -1024,11 +1072,13 @@
       const tradeHtml=tradeItems.length?tradeItems.map(t=>`
         <article class="entry">
           <div class="entry-head"><div><h3>${esc(t.setup)}</h3><p>${esc(t.date)} - ${esc(t.session||"")}</p></div><span class="tag ${t.outcome==="win"?"green":t.outcome==="loss"?"red":"amber"}">${esc(t.outcome||"open")}</span></div>
-          ${t.image?`<img src="${t.image}" alt="" style="width:100%;max-height:220px;object-fit:contain;background:#050409;border:1px solid var(--line);border-radius:12px">`:""}
-          <p>${esc(t.notes||"No notes")}</p>
-          ${t.mistake?`<span class="tag red">${esc(t.mistake)}</span>`:""}
-          ${t.analysis?`<div class="analysis">${md(t.analysis)}</div>`:""}
-          <div class="row"><span class="tag">R ${esc(t.r||0)}</span><span class="tag">Emotion ${esc(t.emotion||"-")}</span><button class="btn danger" data-del="${t.id}">Delete</button></div>
+          <div class="row"><span class="tag">R ${esc(t.r||0)}</span><span class="tag">Emotion ${esc(t.emotion||"-")}</span>${t.mistake?`<span class="tag red">${esc(t.mistake)}</span>`:""}</div>
+          <details class="evidence"><summary>Open trade notes + AI chart review</summary>
+            ${t.image?`<img src="${t.image}" alt="" style="width:100%;max-height:260px;object-fit:contain;background:#050409;border:1px solid var(--line);border-radius:12px;margin-top:12px">`:""}
+            <div class="analysis" style="margin-top:12px"><strong>Your notes</strong><br>${esc(t.notes||"No notes")}</div>
+            ${t.analysis?`<div class="analysis" style="margin-top:12px"><strong>AI chart review</strong>${md(t.analysis)}</div>`:`<div class="modal-note" style="margin-top:12px">No AI review saved for this trade.</div>`}
+          </details>
+          <button class="btn danger" data-del="${t.id}">Delete</button>
         </article>`).join(""):"";
       const readHtml=readItems.length?readItems.map(r=>`
         <article class="entry">
@@ -1187,7 +1237,7 @@
       $("weightCurrent").value=state.weight.current||"";$("weightTarget").value=state.weight.target||"";
       $("goalDeadline").value=state.goal.deadline||"";
       $("goalFocus").value=state.weight.focus||"";
-      goalPaint(); weightPaint();
+      goalPaint(); weightPaint(); renderCustomGoals();
     }
     function drawSparkline(id, points, target, color="#8b5cf6"){
       const svg=$(id);
@@ -1244,6 +1294,56 @@
     $("saveWeightBtn").addEventListener("click",()=>{state.weight.current=Number($("weightCurrent").value)||0;state.weight.target=Number($("weightTarget").value)||0;state.weight.focus=$("goalFocus").value;state.weight.history.push({date:today(),current:state.weight.current});delete state.drafts.weightCurrent;save();toast("Weight checkpoint saved")});
     ["goalTarget","goalCurrent","goalDeadline"].forEach(id=>$(id).addEventListener("input",goalPaint));["weightCurrent","weightTarget","goalFocus"].forEach(id=>$(id).addEventListener("input",weightPaint));
 
+    function goalPlan(g){
+      const unit=g.unit||"units", current=Number(g.current)||0, target=Number(g.target)||0;
+      const remaining=target-current;
+      const days=daysUntil(g.deadline);
+      const pace=days&&days>0?remaining/days:null;
+      const name=(g.name||"goal").toLowerCase();
+      const action=name.includes("eval")||unit==="$"?"Protect daily loss, take only A+ liquidity models, and review every trade before adding size.":name.includes("weight")||unit.toLowerCase().includes("lb")?"Anchor meals, water/salt, gym, sleep, and track bodyweight at the same time daily.":"Break the goal into daily reps, track the lead measure, and review misses every night.";
+      return {remaining,days,pace,action};
+    }
+    function goalCard(g,home=false){
+      const plan=goalPlan(g), current=Number(g.current)||0, target=Number(g.target)||0, pct=target?Math.max(0,Math.min(100,current/target*100)):0;
+      return `<article class="goal-card"><div class="goal-title"><div><h3 style="margin:0 0 4px">${esc(g.name||"Goal")}</h3><p class="small">${esc(g.deadline||"No deadline")} - ${esc(g.unit||"units")}</p></div><span class="tag ${pct>=100?"green":pct<25?"amber":""}">${Math.round(pct)}%</span></div><div class="progress"><span style="width:${pct}%"></span></div><div class="grid three"><div><label class="label">Current</label><input data-goal-current="${g.id}" type="number" value="${esc(g.current||0)}"></div><div><label class="label">Target</label><input data-goal-target="${g.id}" type="number" value="${esc(g.target||0)}"></div><div><label class="label">Deadline</label><input data-goal-deadline="${g.id}" type="date" value="${esc(g.deadline||"")}"></div></div><div class="analysis"><strong>Trajectory:</strong> ${plan.remaining<=0?"Done. Now protect the standard.":`${Math.max(0,plan.remaining).toFixed(1)} ${esc(g.unit||"units")} left${plan.pace!==null?`, about ${Math.max(0,plan.pace).toFixed(2)} per day.`:"."}`}<br><strong>Plan:</strong> ${esc(g.plan||plan.action)}</div><div class="row">${String(g.id).startsWith("home-")?"":`<button class="btn danger" data-goal-delete="${g.id}">Delete</button>`}${home?`<button class="btn" data-view="goals">Details</button>`:""}</div></article>`;
+    }
+    function renderCustomGoals(){
+      const goals=state.customGoals||[];
+      if($("customGoalList")) $("customGoalList").innerHTML=goals.length?goals.map(g=>goalCard(g,false)).join(""):`<div class="modal-note">No custom goals yet. Add one above and Tradecrow will build the pace math.</div>`;
+      if($("homeGoalsPanel")){ const builtIns=[{id:"home-eval",name:"Eval account",current:state.goal.current||0,target:state.goal.target||0,unit:"$",deadline:state.goal.deadline,plan:"Hit the target through A+ setups only, protect drawdown, and save checkpoints."},{id:"home-weight",name:"Weight / discipline",current:state.weight.current||0,target:state.weight.target||0,unit:"lbs",deadline:"",plan:state.weight.focus||"Anchor food, training, water, and sleep daily."}]; $("homeGoalsPanel").innerHTML=builtIns.map(g=>goalCard(g,true)).join("")+ (goals.length?goals.slice(0,4).map(g=>goalCard(g,true)).join(""):`<div class="modal-note">Add more goals in the Goals tab and they will show here.</div>`); }
+      document.querySelectorAll("[data-goal-current],[data-goal-target],[data-goal-deadline]").forEach(input=>{
+        input.addEventListener("change",()=>{
+          const id=input.dataset.goalCurrent||input.dataset.goalTarget||input.dataset.goalDeadline;
+          if(id==="home-eval"){
+            if(input.dataset.goalCurrent) state.goal.current=Number(input.value)||0;
+            if(input.dataset.goalTarget) state.goal.target=Number(input.value)||0;
+            if(input.dataset.goalDeadline) state.goal.deadline=input.value;
+            persist(); renderGoals(); refreshStats(); return;
+          }
+          if(id==="home-weight"){
+            if(input.dataset.goalCurrent) state.weight.current=Number(input.value)||0;
+            if(input.dataset.goalTarget) state.weight.target=Number(input.value)||0;
+            persist(); renderGoals(); refreshStats(); return;
+          }
+          const g=state.customGoals.find(x=>x.id===id); if(!g) return;
+          if(input.dataset.goalCurrent) g.current=Number(input.value)||0;
+          if(input.dataset.goalTarget) g.target=Number(input.value)||0;
+          if(input.dataset.goalDeadline) g.deadline=input.value;
+          g.updatedAt=Date.now(); persist(); renderCustomGoals(); refreshStats();
+        });
+      });
+      document.querySelectorAll("[data-goal-delete]").forEach(btn=>btn.addEventListener("click",()=>{state.customGoals=state.customGoals.filter(g=>g.id!==btn.dataset.goalDelete);save();renderCustomGoals();}));
+      document.querySelectorAll(".goal-card [data-view]").forEach(btn=>btn.addEventListener("click",()=>showView(btn.dataset.view)));
+    }
+    $("addCustomGoalBtn")?.addEventListener("click",()=>{
+      const name=$("customGoalName").value.trim();
+      if(!name) return toast("Name the goal first");
+      const g={id:String(Date.now()),name,current:Number($("customGoalCurrent").value)||0,target:Number($("customGoalTarget").value)||0,unit:$("customGoalUnit").value.trim()||"units",deadline:$("customGoalDeadline").value,createdAt:Date.now()};
+      g.plan=goalPlan(g).action;
+      state.customGoals.unshift(g);
+      ["customGoalName","customGoalCurrent","customGoalTarget","customGoalUnit","customGoalDeadline"].forEach(id=>{$(id).value="";delete state.drafts[id];});
+      save();renderCustomGoals();toast("Goal added");
+    });
     function renderCalendar(){
       const now=new Date(),y=now.getFullYear(),m=now.getMonth(),first=new Date(y,m,1),days=new Date(y,m+1,0).getDate();
       let html=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d=>`<div class="tag" style="justify-content:center">${d}</div>`).join("");
@@ -1394,11 +1494,53 @@
     }    $("addMoneyBtn").addEventListener("click",()=>{const amount=Number($("moneyAmount").value)||0,party=cleanEventTitle($("moneyParty").value.trim());if(!amount||!party)return toast("Add amount and source");state.money.unshift({type:$("moneyType").value,amount,party,category:$("moneyCategory").value,date:$("moneyDate").value||today(),note:$("moneyNote").value.trim(),createdAt:Date.now()});["moneyAmount","moneyParty","moneyNote"].forEach(id=>{$(id).value="";delete state.drafts[id];});save();renderMoney();});
 
     function renderHabits(){
-      const key=today(); state.habits[key]=state.habits[key]||{};
-      $("habitBox").innerHTML=habits.map(h=>`<div class="entry"><div class="entry-head"><h3>${esc(h)}</h3><span class="tag">${state.habits[key][h]||"-"}/5</span></div><div class="row">${[1,2,3,4,5].map(n=>`<button class="btn ${state.habits[key][h]===n?"primary":""}" data-habit="${esc(h)}" data-rate="${n}">${n}</button>`).join("")}</div></div>`).join("");
-      $("habitBox").querySelectorAll("[data-habit]").forEach(b=>b.addEventListener("click",()=>{state.habits[key][b.dataset.habit]=Number(b.dataset.rate);save();renderHabits();}));
+      const y=habitMonthCursor.getFullYear(), m=habitMonthCursor.getMonth();
+      const daysInMonth=new Date(y,m+1,0).getDate();
+      const monthKey=`${y}-${String(m+1).padStart(2,"0")}`;
+      const title=habitMonthCursor.toLocaleDateString(undefined,{month:"long",year:"numeric"});
+      if($("habitMonthTitle")) $("habitMonthTitle").textContent=title;
+      let html='<div class="habit-cell name">Habit</div>';
+      for(let d=1;d<=31;d++) html+=`<div class="habit-cell day-head">${d<=daysInMonth?d:""}</div>`;
+      habits.forEach(h=>{
+        html+=`<button class="habit-cell name" data-habit-row="${esc(h)}">${esc(h)}</button>`;
+        for(let d=1;d<=31;d++){
+          if(d>daysInMonth){html+='<div class="habit-cell"></div>';continue;}
+          const date=`${monthKey}-${String(d).padStart(2,"0")}`;
+          const score=Number(state.habits?.[date]?.[h]||0);
+          html+=`<button class="habit-cell ${score?`score-${score}`:""}" title="${esc(h)} - ${date} - ${score||"not rated"}" data-habit="${esc(h)}" data-date="${date}">${score||""}</button>`;
+        }
+      });
+      $("habitGrid").innerHTML=html;
+      const scores=[];
+      for(let d=1;d<=daysInMonth;d++){
+        const date=`${monthKey}-${String(d).padStart(2,"0")}`;
+        habits.forEach(h=>{const v=Number(state.habits?.[date]?.[h]||0); if(v) scores.push(v);});
+      }
+      const avg=scores.length?Number((scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1)):0;
+      const rated=scores.length;
+      const possible=daysInMonth*habits.length;
+      const bright=scores.filter(v=>v>=4).length;
+      const dark=scores.filter(v=>v<=2).length;
+      $("habitSummary").innerHTML=`<div><b>${avg||"-"}/5</b><span class="small">Monthly average</span></div><div><b>${rated}/${possible}</b><span class="small">Squares rated</span></div><div><b>${bright}</b><span class="small">Strong squares</span></div><div><b>${dark}</b><span class="small">Weak squares</span></div>`;
+      $("habitInsight").innerHTML=`<strong>Read:</strong> ${rated?`${Math.round(rated/possible*100)}% of the month is filled. ${bright>=dark?"Discipline is skewing lighter than darker.":"Dark squares are leading this month, so pick one habit to rescue first."}`:"Start by rating today. The grid gets useful after a few days."}<br><strong>Edit:</strong> click any square, type 1-5, or leave blank to clear it.`;
+      $("habitGrid").querySelectorAll("[data-habit][data-date]").forEach(btn=>btn.addEventListener("click",()=>{
+        const habit=btn.dataset.habit, date=btn.dataset.date;
+        const current=state.habits?.[date]?.[habit]||"";
+        const value=prompt(`${habit}\n${date}\nRate 1-5, or blank to clear:`, current);
+        if(value===null) return;
+        state.habits[date]=state.habits[date]||{};
+        if(value.trim()==="") delete state.habits[date][habit];
+        else {
+          const n=Math.max(1,Math.min(5,Number(value)||0));
+          if(!n) return toast("Use a number from 1 to 5");
+          state.habits[date][habit]=n;
+        }
+        save(); renderHabits();
+      }));
     }
-
+    $("habitPrevMonth")?.addEventListener("click",()=>{habitMonthCursor=new Date(habitMonthCursor.getFullYear(),habitMonthCursor.getMonth()-1,1);renderHabits();});
+    $("habitThisMonth")?.addEventListener("click",()=>{habitMonthCursor=new Date();renderHabits();});
+    $("habitNextMonth")?.addEventListener("click",()=>{habitMonthCursor=new Date(habitMonthCursor.getFullYear(),habitMonthCursor.getMonth()+1,1);renderHabits();});
     function renderTrophies(){
       const total=state.trophies.reduce((a,t)=>a+(Number(t.amount)||0),0);$("trophyTotal").textContent=money(total);
       $("trophyList").innerHTML=state.trophies.map((t,i)=>`<article class="entry"><div class="entry-head"><h3>${esc(t.type)}</h3><span class="tag green">${money(t.amount)}</span></div><p>${esc(t.date)} - ${esc(t.note)}</p><button class="btn danger" data-trophy="${i}">Delete</button></article>`).join("");
@@ -1478,6 +1620,18 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

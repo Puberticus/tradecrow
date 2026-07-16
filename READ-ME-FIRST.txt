@@ -1,1 +1,1 @@
-﻿Upload these files to GitHub repo Puberticus/tradecrow, then Netlify will redeploy. Test /api/health after deploy.
+﻿Upload these files to GitHub repo Puberticus/tradecrow, replacing the existing same-named files. Netlify will redeploy from GitHub.
