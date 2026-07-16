@@ -1,17 +1,1 @@
-TRADECROW DEPLOY FILE
-
-Upload this whole ZIP to Netlify:
-TRADECROW-DEPLOY-THIS-20260714-115830.zip
-
-This package contains:
-- index.html: the website
-- tradecrow-logo.png: the logo
-- netlify.toml: tells Netlify where the functions are
-- netlify/functions/tradecrow-ai.js: OpenAI chart analysis function
-- netlify/functions/tradecrow-health.js: AI connection test function
-
-After deploying, test this in your browser:
-https://YOUR-SITE-NAME.netlify.app/api/health
-
-Expected good result:
-{"ok":true,"hasKey":true,"model":"gpt-4.1"}
+﻿Upload these files to GitHub repo Puberticus/tradecrow, then Netlify will redeploy. Test /api/health after deploy.

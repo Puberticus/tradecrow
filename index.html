@@ -155,6 +155,16 @@
       border:1px solid #37294f;background:rgba(139,92,246,.06);border-radius:12px;padding:16px;color:#d8cfff;line-height:1.6;
     }
     .analysis p{margin:0 0 10px}.analysis p:last-child{margin-bottom:0}
+    .verdict-board{display:grid;gap:12px;margin-top:14px}
+    .verdict-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid var(--line);background:#100d18;border-radius:12px;padding:12px}
+    .check-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+    .check-item{border:1px solid var(--line);border-radius:10px;background:#15111e;padding:10px;font-size:12px;color:#b9aad5}
+    .check-item strong{display:block;color:#f7f3ff;margin-bottom:4px}
+    .learning-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+    .learning-strip div{border:1px solid var(--line);border-radius:12px;background:#100d18;padding:12px}
+    .learning-strip b{display:block;font-size:18px;color:#ad8aff;margin-bottom:4px}
+    .history-list{display:grid;gap:10px;margin-top:14px}
+    .history-item{border:1px solid var(--line);border-radius:12px;background:#100d18;padding:12px}
     .entry-list{display:grid;gap:14px}
     .entry{border:1px solid var(--line);background:rgba(18,16,26,.95);border-radius:14px;padding:16px;display:grid;gap:12px}
     .entry-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
@@ -418,6 +428,13 @@
             <div class="progress" style="margin:16px 0"><span id="setupScoreFill"></span></div>
             <div class="metric purple" id="setupScore">0%</div>
             <div id="setupAiBox" class="analysis" style="margin-top:14px">Upload a 5-minute screenshot to get a liquidity-model verdict: long bias, short bias, or no-trade.</div>
+            <div class="check-grid" id="setupChecklist"></div>
+            <div class="row" style="margin-top:14px">
+              <button class="btn good" id="saveSetupReadBtn" disabled>Save this AI read</button>
+              <button class="btn" id="setupGoodBtn" disabled>Verdict helped</button>
+              <button class="btn danger" id="setupBadBtn" disabled>Verdict missed</button>
+            </div>
+            <div class="history-list" id="setupHistory"></div>
           </div>
         </div>
       </section>
@@ -439,7 +456,7 @@
             <div class="row" style="margin-top:12px"><select id="moneyCategory" style="max-width:190px"><option>Payout</option><option>Prop firm fee</option><option>Software</option><option>Food</option><option>Gym</option><option>Car</option><option>Course</option><option>Other</option></select><input id="moneyDate" type="date" style="max-width:170px"><input id="moneyNote" placeholder="Note, optional"></div>
             <button class="btn primary" id="addMoneyBtn" style="margin-top:12px">Add</button>
           </div>
-          <div class="card"><div class="grid three"><div><label class="label">Income</label><div class="metric green" id="incTotal">$0</div></div><div><label class="label">Expense</label><div class="metric red" id="expTotal">$0</div></div><div><label class="label">Net</label><div class="metric purple" id="netTotal">$0</div></div></div><div class="mini-ledger" id="moneyLedger"></div><div class="analysis" id="moneyInsight" style="margin-top:14px"></div><div id="moneyList" class="entry-list" style="margin-top:16px"></div></div>
+          <div class="card"><div class="grid three"><div><label class="label">Income</label><div class="metric green" id="incTotal">$0</div></div><div><label class="label">Expense</label><div class="metric red" id="expTotal">$0</div></div><div><label class="label">Net</label><div class="metric purple" id="netTotal">$0</div></div></div><div class="mini-ledger" id="moneyLedger"></div><div class="learning-strip"><div><b id="payoutTotal">$0</b><span class="small">Payouts</span></div><div><b id="feeTotal">$0</b><span class="small">Prop/eval fees</span></div><div><b id="runwayTotal">0</b><span class="small">Runway months</span></div><div><b id="monthNetTotal">$0</b><span class="small">This month net</span></div></div><div class="analysis" id="moneyInsight" style="margin-top:14px"></div><div id="moneyList" class="entry-list" style="margin-top:16px"></div></div>
         </div>
       </section>
 
@@ -451,7 +468,7 @@
       <section class="view" id="view-goals">
         <div class="page-head"><div class="eyebrow">Goals</div><h2>Targets with trajectory.</h2><p class="desc">Track eval progress, weight, checkpoints, and whether the trendline says you are speeding up or drifting.</p></div>
         <div class="grid two">
-          <div class="card"><h3 style="margin-top:0">Eval goal</h3><div class="row"><input id="goalTarget" type="number" placeholder="Target profit"><input id="goalCurrent" type="number" placeholder="Current profit"><input id="goalDeadline" type="date" style="max-width:170px"></div><div class="progress" style="margin-top:14px"><span id="goalFill"></span></div><div class="small" id="goalText" style="margin-top:10px;font-family:var(--mono)">No target set yet</div><svg class="sparkline" id="goalSpark" viewBox="0 0 600 120" preserveAspectRatio="none"></svg><div class="analysis" id="goalInsight" style="margin-top:14px"></div><button class="btn primary" id="saveGoalBtn" style="margin-top:12px">Save checkpoint</button></div>
+          <div class="card"><h3 style="margin-top:0">Eval goal</h3><div class="row"><input id="goalTarget" type="number" placeholder="Target profit"><input id="goalCurrent" type="number" placeholder="Current profit"><input id="goalDeadline" type="date" style="max-width:170px"></div><div class="progress" style="margin-top:14px"><span id="goalFill"></span></div><div class="small" id="goalText" style="margin-top:10px;font-family:var(--mono)">No target set yet</div><div class="learning-strip"><div><b id="goalRemaining">$0</b><span class="small">Remaining</span></div><div><b id="goalDailyPace">$0</b><span class="small">Daily pace</span></div><div><b id="goalProbability">0%</b><span class="small">Pass pressure</span></div><div><b id="goalDaysLeft">-</b><span class="small">Days left</span></div></div><svg class="sparkline" id="goalSpark" viewBox="0 0 600 120" preserveAspectRatio="none"></svg><div class="analysis" id="goalInsight" style="margin-top:14px"></div><button class="btn primary" id="saveGoalBtn" style="margin-top:12px">Save checkpoint</button></div>
           <div class="card"><h3 style="margin-top:0">Weight and discipline goal</h3><div class="row"><input id="weightCurrent" type="number" placeholder="Current weight"><input id="weightTarget" type="number" placeholder="Target weight"><input id="goalFocus" placeholder="Focus, e.g. 30 carnivore days"></div><div class="progress" style="margin-top:14px"><span id="weightFill"></span></div><div class="small" id="weightText" style="margin-top:10px;font-family:var(--mono)">No weight goal set yet</div><svg class="sparkline" id="weightSpark" viewBox="0 0 600 120" preserveAspectRatio="none"></svg><div class="analysis" id="weightInsight" style="margin-top:14px"></div><button class="btn primary" id="saveWeightBtn" style="margin-top:12px">Save checkpoint</button></div>
         </div>
       </section>
@@ -590,6 +607,7 @@
     let chartDataUrl = "";
     let chartAnalysis = "";
     let setupDataUrl = "";
+    let currentSetupRead = null;
     let authSession = loadAuthSession();
     let cloudItemId = "";
     let cloudSaveTimer = null;
@@ -600,10 +618,11 @@
       catch{return blank();}
     }
     function blank(){
-      return {trades:[],rules:[],days:{},goal:{history:[]},weight:{history:[]},events:[],money:[],habits:{},trophies:[],aiModels:"",drafts:{},currentDay:""};
+      return {trades:[],setupReads:[],rules:[],days:{},goal:{history:[]},weight:{history:[]},events:[],money:[],habits:{},trophies:[],aiModels:"",drafts:{},currentDay:""};
     }
     function ensureState(){
       state.trades ||= [];
+      state.setupReads ||= [];
       state.rules ||= [];
       state.days ||= {};
       state.goal ||= {};
@@ -650,18 +669,34 @@
       const wins = closed.filter(t=>t.outcome==="win").length;
       const losses = closed.filter(t=>t.outcome==="loss").length;
       const avgR = closed.length ? closed.reduce((a,t)=>a+(Number(t.r)||0),0)/closed.length : 0;
-      const bySetup = {};
-      const mistakes = {};
+      const bySetup = {}, bySession = {}, mistakes = {};
       state.trades.forEach(t=>{
-        bySetup[t.setup] = bySetup[t.setup] || {count:0,wins:0,losses:0,totalR:0};
-        bySetup[t.setup].count++;
-        if(t.outcome==="win") bySetup[t.setup].wins++;
-        if(t.outcome==="loss") bySetup[t.setup].losses++;
-        bySetup[t.setup].totalR += Number(t.r)||0;
+        const setup=t.setup||"Unknown setup", session=t.session||"Unknown session";
+        bySetup[setup] = bySetup[setup] || {count:0,wins:0,losses:0,totalR:0,avgR:0};
+        bySetup[setup].count++;
+        if(t.outcome==="win") bySetup[setup].wins++;
+        if(t.outcome==="loss") bySetup[setup].losses++;
+        bySetup[setup].totalR += Number(t.r)||0;
+        bySetup[setup].avgR = Number((bySetup[setup].totalR/bySetup[setup].count).toFixed(2));
+        bySession[session] = bySession[session] || {count:0,wins:0,losses:0,totalR:0,avgR:0};
+        bySession[session].count++;
+        if(t.outcome==="win") bySession[session].wins++;
+        if(t.outcome==="loss") bySession[session].losses++;
+        bySession[session].totalR += Number(t.r)||0;
+        bySession[session].avgR = Number((bySession[session].totalR/bySession[session].count).toFixed(2));
         if(t.mistake) mistakes[t.mistake]=(mistakes[t.mistake]||0)+1;
       });
-      const bestSetup = Object.entries(bySetup).sort((a,b)=>(b[1].wins-b[1].losses)-(a[1].wins-a[1].losses))[0];
+      const bestSetup = Object.entries(bySetup).sort((a,b)=>b[1].avgR-a[1].avgR || b[1].count-a[1].count)[0];
+      const worstSetup = Object.entries(bySetup).sort((a,b)=>a[1].avgR-b[1].avgR || b[1].count-a[1].count)[0];
+      const bestSession = Object.entries(bySession).sort((a,b)=>b[1].avgR-a[1].avgR || b[1].count-a[1].count)[0];
       const worstMistake = Object.entries(mistakes).sort((a,b)=>b[1]-a[1])[0];
+      const setupReads=state.setupReads||[];
+      const helped=setupReads.filter(r=>r.feedback==="helped").length;
+      const missed=setupReads.filter(r=>r.feedback==="missed").length;
+      const habitDays=Object.values(state.habits||{});
+      const habitScores=habitDays.flatMap(day=>Object.values(day).map(Number)).filter(Boolean);
+      const avgDiscipline=habitScores.length?Number((habitScores.reduce((a,b)=>a+b,0)/habitScores.length).toFixed(1)):0;
+      const recentHabits=state.habits?.[today()]||{};
       return {
         trades:state.trades.length,
         closed:closed.length,
@@ -669,13 +704,20 @@
         losses,
         avgR:Number(avgR.toFixed(2)),
         bestSetup:bestSetup ? bestSetup[0] : "Not enough data",
+        worstSetup:worstSetup ? worstSetup[0] : "Not enough data",
+        bestSession:bestSession ? bestSession[0] : "Not enough data",
         worstMistake:worstMistake ? worstMistake[0] : "No repeated mistake yet",
+        aiReads:setupReads.length,
+        aiFeedback:{helped,missed,hitRate:helped+missed?Math.round(helped/(helped+missed)*100):0},
+        avgDiscipline,
+        todayHabits:recentHabits,
         setupStats:bySetup,
+        sessionStats:bySession,
         rules:state.rules.map(r=>r.text).slice(-12),
-        recentTrades:state.trades.slice(0,12).map(t=>({date:t.date,setup:t.setup,outcome:t.outcome,r:t.r,mistake:t.mistake,notes:t.notes}))
+        recentAiReads:setupReads.slice(0,8).map(r=>({date:r.date,market:r.market,session:r.session,model:r.model,verdict:r.verdict,score:r.score,feedback:r.feedback,notes:r.notes})),
+        recentTrades:state.trades.slice(0,12).map(t=>({date:t.date,session:t.session,setup:t.setup,outcome:t.outcome,r:t.r,mistake:t.mistake,notes:t.notes}))
       };
     }
-
     async function ai(task,payload={}){
       const body = {task,payload:{...payload,traderProfile:profile()}};
       try{
@@ -770,7 +812,7 @@
       Object.assign(state, blank(), next || {});
       ensureState();
       localStorage.setItem(STORE, JSON.stringify(state));
-      refreshAll();renderRules();renderTerms();renderModels();renderCalendar();renderMoney();renderHabits();renderTrophies();renderLibrary();renderGoals();
+      refreshAll();renderRules();renderTerms();renderModels();renderCalendar();renderMoney();renderHabits();renderTrophies();renderSetupHistory();renderLibrary();renderGoals();
     }
     function scheduleCloudSave(){
       if(!authSession || !authSession.access_token || cloudLoading) return;
@@ -873,7 +915,7 @@
       if(view==="goals") renderGoals();
       if(view==="trophy") renderTrophies();
       if(view==="terms") renderTerms();
-      if(view==="analyzer") checkAiHealth();
+      if(view==="analyzer"){ checkAiHealth(); renderSetupHistory(); renderSetupChecklist(); }
       window.scrollTo({top:0,behavior:"smooth"});
     }
     document.querySelectorAll("[data-view]").forEach(el=>el.addEventListener("click",()=>show(el.dataset.view)));
@@ -938,7 +980,10 @@
       $("setupFile").addEventListener("change",e=>e.target.files[0]&&readSetupImage(e.target.files[0]));
       $("setupDrop").addEventListener("dragover",e=>e.preventDefault());
       $("setupDrop").addEventListener("drop",e=>{e.preventDefault(); if(e.dataTransfer.files[0]) readSetupImage(e.dataTransfer.files[0]);});
-      $("setupClearBtn").addEventListener("click",()=>{setupDataUrl="";$("setupFile").value="";$("setupPreview").style.display="none";});
+      $("setupClearBtn").addEventListener("click",()=>{setupDataUrl="";currentSetupRead=null;$("setupFile").value="";$("setupPreview").style.display="none";$("saveSetupReadBtn").disabled=true;$("setupGoodBtn").disabled=true;$("setupBadBtn").disabled=true;renderSetupChecklist([]);});
+      $("saveSetupReadBtn").addEventListener("click",saveCurrentSetupRead);
+      $("setupGoodBtn").addEventListener("click",()=>setSetupFeedback("helped"));
+      $("setupBadBtn").addEventListener("click",()=>setSetupFeedback("missed"));
     }
     function readChart(file){
       if(!file.type.startsWith("image/")) return toast("Upload an image");
@@ -973,9 +1018,10 @@
 
     function renderLibrary(){
       const q=($("librarySearch").value||"").toLowerCase();
-      const items=state.trades.filter(t=>[t.date,t.session,t.setup,t.outcome,t.notes,t.mistake,t.analysis].join(" ").toLowerCase().includes(q));
-      $("libraryCount").textContent=items.length+" entries";
-      $("libraryList").innerHTML=items.length?items.map(t=>`
+      const tradeItems=state.trades.filter(t=>[t.date,t.session,t.setup,t.outcome,t.notes,t.mistake,t.analysis].join(" ").toLowerCase().includes(q));
+      const readItems=(state.setupReads||[]).filter(r=>[r.date,r.market,r.session,r.model,r.verdict,r.notes,r.text,r.feedback].join(" ").toLowerCase().includes(q));
+      $("libraryCount").textContent=(tradeItems.length+readItems.length)+" entries";
+      const tradeHtml=tradeItems.length?tradeItems.map(t=>`
         <article class="entry">
           <div class="entry-head"><div><h3>${esc(t.setup)}</h3><p>${esc(t.date)} - ${esc(t.session||"")}</p></div><span class="tag ${t.outcome==="win"?"green":t.outcome==="loss"?"red":"amber"}">${esc(t.outcome||"open")}</span></div>
           ${t.image?`<img src="${t.image}" alt="" style="width:100%;max-height:220px;object-fit:contain;background:#050409;border:1px solid var(--line);border-radius:12px">`:""}
@@ -983,19 +1029,37 @@
           ${t.mistake?`<span class="tag red">${esc(t.mistake)}</span>`:""}
           ${t.analysis?`<div class="analysis">${md(t.analysis)}</div>`:""}
           <div class="row"><span class="tag">R ${esc(t.r||0)}</span><span class="tag">Emotion ${esc(t.emotion||"-")}</span><button class="btn danger" data-del="${t.id}">Delete</button></div>
-        </article>`).join(""):`<div class="modal-note">No trades yet. Log one trade and this page becomes the AI's memory.</div>`;
+        </article>`).join(""):"";
+      const readHtml=readItems.length?readItems.map(r=>`
+        <article class="entry">
+          <div class="entry-head"><div><h3>${esc(r.verdict||"AI setup read")}</h3><p>${esc(r.date)} - ${esc(r.market||"")} - ${esc(r.session||"")}</p></div><span class="tag ${esc(r.cls||"amber")}">${esc(r.score||0)}%</span></div>
+          ${r.image?`<img src="${r.image}" alt="" style="width:100%;max-height:220px;object-fit:contain;background:#050409;border:1px solid var(--line);border-radius:12px">`:""}
+          <div class="analysis">${md(r.text||"")}</div>
+          <div class="row"><span class="tag">${esc(r.model||"Model")}</span>${r.feedback?`<span class="tag ${r.feedback==="helped"?"green":"red"}">${esc(r.feedback)}</span>`:""}<button class="btn danger" data-read-del="${r.id}">Delete</button></div>
+        </article>`).join(""):"";
+      $("libraryList").innerHTML=(tradeHtml||readHtml)?readHtml+tradeHtml:`<div class="modal-note">No evidence yet. Log a trade or save an AI setup read and this page becomes the AI's memory.</div>`;
       $("libraryList").querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",()=>{state.trades=state.trades.filter(t=>t.id!==b.dataset.del);save();renderLibrary();}));
+      $("libraryList").querySelectorAll("[data-read-del]").forEach(b=>b.addEventListener("click",()=>{state.setupReads=state.setupReads.filter(r=>r.id!==b.dataset.readDel);save();renderLibrary();renderSetupHistory();}));
     }
-
     function renderModels(){
       const p=profile();
-      $("modelMemoryTag").textContent=p.trades+" trades learned";
-      $("profileBox").innerHTML=md(`**Trades:** ${p.trades}\n**Win rate:** ${p.winRate}%\n**Average R:** ${p.avgR}\n**Best setup:** ${p.bestSetup}\n**Main leak:** ${p.worstMistake}`);
-      const cards=baseModels.map(m=>modelCard(m)).join("");
+      $("modelMemoryTag").textContent=`${p.trades} trades / ${p.aiReads} AI reads learned`;
+      $("profileBox").innerHTML=`
+        <div class="learning-strip">
+          <div><b>${p.winRate}%</b><span class="small">Win rate</span></div>
+          <div><b>${p.avgR}</b><span class="small">Average R</span></div>
+          <div><b>${p.aiFeedback.hitRate}%</b><span class="small">AI helped rate</span></div>
+          <div><b>${p.avgDiscipline||"-"}/5</b><span class="small">Avg discipline</span></div>
+        </div>
+        <div class="analysis" style="margin-top:14px">${md(`**Best setup:** ${p.bestSetup}\n**Weakest setup:** ${p.worstSetup}\n**Best session:** ${p.bestSession}\n**Main leak:** ${p.worstMistake}`)}</div>`;
+      const cards=baseModels.map(m=>modelCard(m,p)).join("");
       $("modelGrid").innerHTML=cards + (state.aiModels?`<div class="card" style="grid-column:1/-1"><h3 style="margin-top:0">AI generated model notes</h3><div class="analysis">${md(state.aiModels)}</div></div>`:"");
     }
-    function modelCard(m){
-      return `<article class="card concept-card"><svg viewBox="0 0 300 118"><path d="M18 76 C52 76 58 34 92 38 S132 98 170 54 S220 34 280 72" fill="none" stroke="#8b5cf6" stroke-width="4" stroke-linecap="round"/><line x1="20" y1="76" x2="280" y2="76" stroke="#5f5472" stroke-dasharray="5 5"/><circle cx="94" cy="38" r="5" fill="#f7f3ff"/></svg><div class="entry-head"><h3>${esc(m.name)}</h3><span class="tag">${esc(m.type)}</span></div><p>${m.rules.map(r=>"* "+esc(r)).join("<br>")}</p><div class="modal-note" style="margin-top:12px"><strong>Avoid:</strong> ${esc(m.avoid)}</div></article>`;
+    function modelCard(m,p){
+      const fuzzy=Object.entries(p.setupStats).find(([name])=>m.name.toLowerCase().includes(name.toLowerCase()) || name.toLowerCase().includes(m.name.toLowerCase()));
+      const stats=p.setupStats[m.name] || (fuzzy&&fuzzy[1]) || {count:0,avgR:0,wins:0,losses:0};
+      const evidence=stats.count?`${stats.count} reps / ${stats.avgR} avg R`:"Needs reps";
+      return `<article class="card concept-card"><svg viewBox="0 0 300 118"><path d="M18 76 C52 76 58 34 92 38 S132 98 170 54 S220 34 280 72" fill="none" stroke="#8b5cf6" stroke-width="4" stroke-linecap="round"/><line x1="20" y1="76" x2="280" y2="76" stroke="#5f5472" stroke-dasharray="5 5"/><circle cx="94" cy="38" r="5" fill="#f7f3ff"/></svg><div class="entry-head"><h3>${esc(m.name)}</h3><span class="tag">${esc(m.type)}</span></div><div class="verdict-board"><div class="verdict-row"><span><strong>Evidence</strong><br><span class="small">${esc(evidence)}</span></span><span class="tag ${stats.avgR>0?"green":stats.avgR<0?"red":"amber"}">${esc(stats.avgR||0)}R</span></div><div class="check-grid">${m.rules.map(r=>`<div class="check-item"><strong>Confirm</strong>${esc(r)}</div>`).join("")}</div></div><div class="modal-note" style="margin-top:12px"><strong>Invalidation habit:</strong> pass if ${esc(m.avoid.toLowerCase())}<br><strong>Review question:</strong> Did this trade wait for liquidity + structure, or did emotion enter first?</div></article>`;
     }
     $("buildModelsBtn").addEventListener("click",async()=>{
       $("modelAiBox").style.display="block";$("modelAiBox").textContent="Building models from your saved trades, rules, and mistakes...";
@@ -1022,16 +1086,59 @@
     $("termSearch").addEventListener("input",renderTerms);
     $("researchBtn").addEventListener("click",async()=>{const q=$("researchInput").value.trim(); if(!q)return toast("Ask a question first"); $("researchBox").style.display="block";$("researchBox").textContent="Researching with your profile...";$("researchBox").innerHTML=md(await ai("research",{question:q}));});
 
-    function applySetupVerdict(text){
-      const upper=text.toUpperCase();
+    function setupVerdictMeta(text){
+      const upper=(text||"").toUpperCase();
       let label="NO-TRADE / WAIT", cls="amber", score=58;
       if(/\b(LONG BIAS|BUY BIAS|BUY|LONG)\b/.test(upper) && !/\bNO-TRADE\b/.test(upper)){label="LONG / BUY BIAS";cls="green";score=82;}
       if(/\b(SHORT BIAS|SELL BIAS|SELL|SHORT)\b/.test(upper) && !/\bNO-TRADE\b/.test(upper)){label="SHORT / SELL BIAS";cls="red";score=82;}
       if(/\bNO-TRADE|WAIT|PASS\b/.test(upper)){label="NO-TRADE / WAIT";cls="amber";score=52;}
-      $("setupVerdict").textContent=label;
-      $("setupVerdict").className="tag "+cls;
-      $("setupScoreFill").style.width=score+"%";
-      $("setupScore").textContent=score+"%";
+      if(/\bUNCLEAR|LOW CONFIDENCE|SCREENSHOT IS UNCLEAR\b/.test(upper)) score=Math.min(score,44);
+      return {label,cls,score};
+    }
+    function applySetupVerdict(text){
+      const meta=setupVerdictMeta(text);
+      $("setupVerdict").textContent=meta.label;
+      $("setupVerdict").className="tag "+meta.cls;
+      $("setupScoreFill").style.width=meta.score+"%";
+      $("setupScore").textContent=meta.score+"%";
+      return meta;
+    }
+    function setupChecklistFromText(text=""){
+      const upper=text.toUpperCase();
+      const flags=[
+        ["Trend", /OVERALL 5M TREND|BULLISH|BEARISH|RANGING/.test(upper), "Bias read from visible structure"],
+        ["Liquidity", /LIQUIDITY|BUY-SIDE|SELL-SIDE|BUYSIDE|SELLSIDE|POOL/.test(upper), "Buy-side / sell-side map named"],
+        ["Sweep", /SWEEP|RAID|MANIPULATION|STOP/.test(upper), "Sweep or no-sweep called out"],
+        ["Structure", /CHOCH|BOS|MSS|STRUCTURE|DISPLACEMENT/.test(upper), "Confirmation evidence checked"],
+        ["FVG / breaker", /FVG|FAIR VALUE|BREAKER|IMBALANCE|ORDER BLOCK/.test(upper), "Entry model zone inspected"],
+        ["Invalidation", /INVALIDATION|INVALID|WRONG|FAIL/.test(upper), "Wrong-if level or condition defined"]
+      ];
+      return flags.map(([name,on,why])=>({name,on,why}));
+    }
+    function renderSetupChecklist(items=setupChecklistFromText(currentSetupRead?.text||"")){
+      const box=$("setupChecklist");
+      if(!box) return;
+      box.innerHTML=items.map(x=>`<div class="check-item"><strong>${x.on?"Yes":"Check"} - ${esc(x.name)}</strong>${esc(x.why)}</div>`).join("");
+    }
+    function renderSetupHistory(){
+      const box=$("setupHistory");
+      if(!box) return;
+      const reads=(state.setupReads||[]).slice(0,4);
+      box.innerHTML=reads.length?reads.map(r=>`<div class="history-item"><div class="entry-head"><strong>${esc(r.verdict||"AI read")}</strong><span class="tag ${esc(r.cls||"amber")}">${esc(r.score||0)}%</span></div><p class="small">${esc(r.date||today())} - ${esc(r.market||"")} - ${esc(r.session||"")}${r.feedback?` - Feedback: ${esc(r.feedback)}`:""}</p></div>`).join(""):`<div class="modal-note">Saved AI reads will appear here and feed your profile.</div>`;
+    }
+    function setSetupFeedback(feedback){
+      if(!currentSetupRead) return toast("Run an AI read first");
+      currentSetupRead.feedback=feedback;
+      const existing=state.setupReads.find(r=>r.id===currentSetupRead.id);
+      if(existing) existing.feedback=feedback;
+      else state.setupReads.unshift({...currentSetupRead});
+      save(); renderSetupHistory(); renderLibrary(); renderModels(); toast("Feedback saved to model memory");
+    }
+    function saveCurrentSetupRead(){
+      if(!currentSetupRead) return toast("Run an AI read first");
+      const exists=state.setupReads.some(r=>r.id===currentSetupRead.id);
+      if(!exists) state.setupReads.unshift({...currentSetupRead});
+      save(); renderSetupHistory(); renderLibrary(); renderModels(); toast("AI read saved to journal memory");
     }
     $("analyzeSetupBtn").addEventListener("click",async()=>{
       if(!setupDataUrl) return toast("Upload a 5-minute chart screenshot first");
@@ -1056,8 +1163,14 @@
         "**Invalidation** - what visible level makes the idea wrong.",
         "**Why this can fail** - one concrete failure condition."
       ].join("\\n");
-      const text=await ai("setup",{prompt,timeframe:$("setupTimeframe").value,market:$("setupMarket").value,session:$("setupSession").value,model:$("setupModel").value,notes:$("setupNotes").value,imageDataUrl:setupDataUrl});
-      applySetupVerdict(text);
+      const text=await ai("setup",{prompt,timeframe:$("setupTimeframe").value,market:$("setupMarket").value,session:$("setupSession").value,model:$("setupModel").value,notes:$("setupNotes").value,imageDataUrl:setupDataUrl,priorAiReads:(state.setupReads||[]).slice(0,6)});
+      const meta=applySetupVerdict(text);
+      const checklist=setupChecklistFromText(text);
+      currentSetupRead={id:String(Date.now()),date:today(),market:$("setupMarket").value,session:$("setupSession").value,timeframe:$("setupTimeframe").value,model:$("setupModel").value,notes:$("setupNotes").value,verdict:meta.label,cls:meta.cls,score:meta.score,text,checklist,image:setupDataUrl,createdAt:Date.now()};
+      renderSetupChecklist(checklist);
+      $("saveSetupReadBtn").disabled=false;
+      $("setupGoodBtn").disabled=false;
+      $("setupBadBtn").disabled=false;
       $("setupAiBox").innerHTML=md(text);
     });
 
@@ -1116,9 +1229,17 @@
       const days=daysUntil(state.goal.deadline);
       const remaining=target-cur;
       const perDay=days&&days>0?remaining/days:null;
-      $("goalInsight").innerHTML=target?`<strong>Trajectory:</strong> ${remaining<=0?"Target hit. Protect the account now.":days?`${money(remaining)} left${perDay!==null?`, about ${money(perDay)} per day until deadline.`:"."}`:"Set a deadline to see daily pace."}`:"Set a target, current profit, and deadline to build a real eval plan.";
-    }
-    function weightPaint(){const cur=Number($("weightCurrent").value||state.weight.current||0),target=Number($("weightTarget").value||state.weight.target||0),pct=target&&cur?Math.min(100,cur/target*100):0;$("weightFill").style.width=pct+"%";$("weightText").textContent=target?`${cur} of ${target} lbs - ${Math.round(pct)}%`:"No weight goal set yet";drawSparkline("weightSpark",(state.weight.history||[]).map(x=>({value:x.current})),target,"#bda7ff");$("weightInsight").innerHTML=target?`<strong>Focus:</strong> ${esc(state.weight.focus||$("goalFocus").value||"Pick one daily behavior.")}<br><strong>Gap:</strong> ${Math.abs(target-cur).toFixed(1)} lbs ${target>=cur?"to gain":"to cut"}.`:"Add weight target, current weight, and a focus streak.";}
+      const history=state.goal.history||[];
+      const first=history[0]?.current;
+      const last=history.at?.(-1)?.current ?? cur;
+      const slope=history.length>1?Number(((last-first)/(history.length-1)).toFixed(1)):0;
+      const pressure=target&&remaining<=0?100:target&&perDay!==null?Math.max(0,Math.min(100,Math.round((Math.max(0,slope)/(Math.max(1,perDay)))*100))):0;
+      $("goalRemaining").textContent=target?money(Math.max(0,remaining)):"$0";
+      $("goalDailyPace").textContent=perDay!==null?money(Math.max(0,perDay)):"$0";
+      $("goalProbability").textContent=pressure+"%";
+      $("goalDaysLeft").textContent=days!==null?String(Math.max(0,days)):"-";
+      $("goalInsight").innerHTML=target?`<strong>Eval command:</strong> ${remaining<=0?"Target hit. Protect the account now and avoid payout-sabotage trades.":days?`${money(remaining)} left, about ${money(Math.max(0,perDay||0))} per day until deadline.`:"Set a deadline to see daily pace."}<br><strong>Trendline:</strong> ${history.length>1?`${money(slope)} average checkpoint change.`:"Save more checkpoints to calculate trend."}<br><strong>Risk warning:</strong> ${negative?"You are below zero. The progress bar is red because recovery is the first job." : pressure<55&&target&&days?"Current pace is behind target. Reduce low-quality trades and focus only on A+ models." : "Pace is workable if discipline stays clean."}`:"Set a target, current profit, and deadline to build a real eval plan.";
+    }    function weightPaint(){const cur=Number($("weightCurrent").value||state.weight.current||0),target=Number($("weightTarget").value||state.weight.target||0),pct=target&&cur?Math.min(100,cur/target*100):0;$("weightFill").style.width=pct+"%";$("weightText").textContent=target?`${cur} of ${target} lbs - ${Math.round(pct)}%`:"No weight goal set yet";drawSparkline("weightSpark",(state.weight.history||[]).map(x=>({value:x.current})),target,"#bda7ff");$("weightInsight").innerHTML=target?`<strong>Focus:</strong> ${esc(state.weight.focus||$("goalFocus").value||"Pick one daily behavior.")}<br><strong>Gap:</strong> ${Math.abs(target-cur).toFixed(1)} lbs ${target>=cur?"to gain":"to cut"}.`:"Add weight target, current weight, and a focus streak.";}
     $("saveGoalBtn").addEventListener("click",()=>{state.goal.target=Number($("goalTarget").value)||0;state.goal.current=Number($("goalCurrent").value)||0;state.goal.deadline=$("goalDeadline").value;state.goal.history.push({date:today(),current:state.goal.current});delete state.drafts.goalCurrent;save();toast("Goal checkpoint saved")});
     $("saveWeightBtn").addEventListener("click",()=>{state.weight.current=Number($("weightCurrent").value)||0;state.weight.target=Number($("weightTarget").value)||0;state.weight.focus=$("goalFocus").value;state.weight.history.push({date:today(),current:state.weight.current});delete state.drafts.weightCurrent;save();toast("Weight checkpoint saved")});
     ["goalTarget","goalCurrent","goalDeadline"].forEach(id=>$(id).addEventListener("input",goalPaint));["weightCurrent","weightTarget","goalFocus"].forEach(id=>$(id).addEventListener("input",weightPaint));
@@ -1247,18 +1368,30 @@
     });
 
     function renderMoney(){
-      const inc=state.money.filter(x=>x.type==="income").reduce((a,x)=>a+x.amount,0),exp=state.money.filter(x=>x.type==="expense").reduce((a,x)=>a+x.amount,0);
+      const inc=state.money.filter(x=>x.type==="income").reduce((a,x)=>a+x.amount,0), exp=state.money.filter(x=>x.type==="expense").reduce((a,x)=>a+x.amount,0);
       $("incTotal").textContent=money(inc);$("expTotal").textContent=money(exp);$("netTotal").textContent=money(inc-exp);
       const now=new Date();
       const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push(dateString(d));}
       $("moneyLedger").innerHTML=days.map(ds=>{const net=state.money.filter(x=>x.date===ds).reduce((a,x)=>a+(x.type==="income"?x.amount:-x.amount),0);return `<span class="${net>0?"good":net<0?"bad":""}" title="${ds} ${money(net)}"></span>`}).join("");
       const monthMoney=state.money.filter(x=>{const d=new Date((x.date||today())+"T00:00:00");return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();});
+      const monthIncome=monthMoney.filter(x=>x.type==="income").reduce((a,x)=>a+x.amount,0);
+      const monthExpense=monthMoney.filter(x=>x.type==="expense").reduce((a,x)=>a+x.amount,0);
+      const monthNet=monthIncome-monthExpense;
+      const payouts=state.money.filter(x=>x.type==="income" && /payout/i.test(x.category||x.party||"")).reduce((a,x)=>a+x.amount,0);
+      const fees=state.money.filter(x=>x.type==="expense" && /(prop|eval|firm|challenge)/i.test([x.category,x.party,x.note].join(" "))).reduce((a,x)=>a+x.amount,0);
+      const monthKeys=[...new Set(state.money.map(x=>(x.date||today()).slice(0,7)))];
+      const avgMonthlyExpense=monthKeys.length?monthKeys.map(key=>state.money.filter(x=>x.type==="expense"&&(x.date||today()).startsWith(key)).reduce((a,x)=>a+x.amount,0)).reduce((a,b)=>a+b,0)/monthKeys.length:0;
+      const runway=avgMonthlyExpense?Math.max(0,(inc-exp)/avgMonthlyExpense):0;
+      $("payoutTotal").textContent=money(payouts);
+      $("feeTotal").textContent=money(fees);
+      $("runwayTotal").textContent=runway?runway.toFixed(1):"0";
+      $("monthNetTotal").textContent=money(monthNet);
       const topCat=Object.entries(monthMoney.reduce((acc,x)=>{if(x.type==="expense") acc[x.category||"Other"]=(acc[x.category||"Other"]||0)+x.amount;return acc;},{})).sort((a,b)=>b[1]-a[1])[0];
-      $("moneyInsight").innerHTML=`<strong>This month:</strong> ${money(monthMoney.filter(x=>x.type==="income").reduce((a,x)=>a+x.amount,0)-monthMoney.filter(x=>x.type==="expense").reduce((a,x)=>a+x.amount,0))} net.${topCat?` Biggest expense lane is <strong>${esc(topCat[0])}</strong> at ${money(topCat[1])}.`:" Add expenses to see your biggest leak."}`;
+      const payoutRatio=fees?Math.round((payouts/fees)*100):0;
+      $("moneyInsight").innerHTML=`<strong>This month:</strong> ${money(monthNet)} net. ${topCat?`Biggest expense lane is <strong>${esc(topCat[0])}</strong> at ${money(topCat[1])}.`:"Add expenses to see your biggest leak."}<br><strong>Trading business:</strong> ${payouts?`${money(payouts)} payout logged`:"No payouts logged yet"}${fees?`, ${money(fees)} in prop/eval costs, payout-to-fee ratio ${payoutRatio}%.`:". Add prop/eval fees to know true cost."}<br><strong>Runway:</strong> ${runway?`${runway.toFixed(1)} months at your logged burn rate.`:"Log more expenses to calculate runway."}`;
       $("moneyList").innerHTML=state.money.map((x,i)=>`<article class="money-card"><div class="entry-head"><div><h3 style="margin:0 0 4px">${esc(x.party)}</h3><p class="small">${esc(x.date||today())} - ${esc(x.category||"Other")}${x.note?` - ${esc(x.note)}`:""}</p></div><span class="tag ${x.type==="income"?"green":"red"}">${x.type==="income"?"+":"-"}${money(x.amount)}</span></div><button class="btn danger" data-money="${i}" style="margin-top:10px">Delete</button></article>`).join("");
       $("moneyList").querySelectorAll("[data-money]").forEach(b=>b.addEventListener("click",()=>{state.money.splice(Number(b.dataset.money),1);save();renderMoney();}));
-    }
-    $("addMoneyBtn").addEventListener("click",()=>{const amount=Number($("moneyAmount").value)||0,party=cleanEventTitle($("moneyParty").value.trim());if(!amount||!party)return toast("Add amount and source");state.money.unshift({type:$("moneyType").value,amount,party,category:$("moneyCategory").value,date:$("moneyDate").value||today(),note:$("moneyNote").value.trim(),createdAt:Date.now()});["moneyAmount","moneyParty","moneyNote"].forEach(id=>{$(id).value="";delete state.drafts[id];});save();renderMoney();});
+    }    $("addMoneyBtn").addEventListener("click",()=>{const amount=Number($("moneyAmount").value)||0,party=cleanEventTitle($("moneyParty").value.trim());if(!amount||!party)return toast("Add amount and source");state.money.unshift({type:$("moneyType").value,amount,party,category:$("moneyCategory").value,date:$("moneyDate").value||today(),note:$("moneyNote").value.trim(),createdAt:Date.now()});["moneyAmount","moneyParty","moneyNote"].forEach(id=>{$(id).value="";delete state.drafts[id];});save();renderMoney();});
 
     function renderHabits(){
       const key=today(); state.habits[key]=state.habits[key]||{};
@@ -1345,5 +1478,24 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
