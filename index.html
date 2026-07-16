@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -165,14 +165,40 @@
     .learning-strip b{display:block;font-size:18px;color:#ad8aff;margin-bottom:4px}
     .history-list{display:grid;gap:10px;margin-top:14px}
     .history-item{border:1px solid var(--line);border-radius:12px;background:#100d18;padding:12px}
-    .habit-matrix{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#0d0a13;margin-top:14px}
-    .habit-table{min-width:980px;display:grid;grid-template-columns:190px repeat(31,30px);gap:1px;background:var(--line)}
-    .habit-cell{min-height:30px;background:#120f1a;display:grid;place-items:center;font:700 10px/1 var(--mono);color:#a99bc0;border:0}
-    .habit-cell.name{justify-content:start;text-align:left;padding:8px;font-family:var(--font);font-size:12px;line-height:1.25;color:#f7f3ff;position:sticky;left:0;z-index:2;background:#171321}
-    .habit-cell.day-head{color:#8d7fa4;background:#171321}
-    .habit-cell.score-1{background:#100b18;color:#5f5472}.habit-cell.score-2{background:#211435;color:#8d7fa4}.habit-cell.score-3{background:#3a2361;color:#c8b7ea}.habit-cell.score-4{background:#6540a8;color:#f0e8ff}.habit-cell.score-5{background:#d9caff;color:#170d24}
+    .verdict-frame{border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,#171321,#100d18);padding:18px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;box-shadow:0 0 28px rgba(139,92,246,.12)}
+    .verdict-frame.green{border-color:rgba(52,211,153,.55);background:linear-gradient(135deg,rgba(52,211,153,.16),rgba(18,16,26,.96));box-shadow:0 0 34px rgba(52,211,153,.14)}
+    .verdict-frame.red{border-color:rgba(255,105,105,.55);background:linear-gradient(135deg,rgba(255,105,105,.16),rgba(18,16,26,.96));box-shadow:0 0 34px rgba(255,105,105,.14)}
+    .verdict-frame.amber{border-color:rgba(251,191,36,.45);background:linear-gradient(135deg,rgba(251,191,36,.1),rgba(18,16,26,.96))}
+    .verdict-title{font-size:20px;font-weight:900;letter-spacing:-.03em}
+    .confidence-number{font-size:38px;font-weight:900;letter-spacing:-.05em;color:#ad8aff}
+    .upload-stack{display:grid;gap:12px}
+    .upload-slot{border:1px solid var(--line);border-radius:14px;background:#100d18;padding:12px}
+    .upload-slot .drop{min-height:132px;border-radius:12px}
+    .upload-slot.required{border-color:#62419b}
+    .upload-slot-title{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}
+    .upload-slot-title strong{font-size:13px}
+    .habit-daily{display:grid;gap:10px;margin-top:14px}
+    .habit-card{border:1px solid var(--line);border-radius:14px;background:#100d18;padding:13px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+    .habit-rater{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+    .habit-rater button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#171321;color:#a99bc0;font-weight:900}
+    .habit-rater button.active{background:linear-gradient(180deg,#8b5cf6,#4f278f);color:#fff;border-color:#a879ff;box-shadow:0 0 18px rgba(139,92,246,.24)}
+    .habit-matrix{border:1px solid var(--line);border-radius:18px;background:#0d0a13;margin-top:18px;padding:14px}
+    .habit-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+    .habit-weekday{font:800 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#8d7fa4;text-align:center;padding:8px 0}
+    .habit-day-tile{min-height:86px;border:1px solid var(--line);border-radius:14px;background:#12101a;color:#d8cfff;text-align:left;padding:10px;display:flex;flex-direction:column;justify-content:space-between;transition:.15s}
+    .habit-day-tile:hover,.habit-day-tile.active{transform:translateY(-1px);border-color:#8b5cf6;box-shadow:0 0 20px rgba(139,92,246,.16)}
+    .habit-day-tile.empty{opacity:.45}
+    .habit-day-tile .day-num{font-weight:900;color:#f7f3ff}
+    .habit-day-tile .day-label{font:700 10px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#a99bc0}
+    .habit-day-tile.score-1{background:linear-gradient(180deg,#2d2438,#1a1521)}
+    .habit-day-tile.score-2{background:linear-gradient(180deg,#3b2b55,#201731)}
+    .habit-day-tile.score-3{background:linear-gradient(180deg,#52357f,#271b42)}
+    .habit-day-tile.score-4{background:linear-gradient(180deg,#6a3eb2,#21143d)}
+    .habit-day-tile.score-5{background:linear-gradient(180deg,#8b5cf6,#160e28);box-shadow:inset 0 0 28px rgba(255,255,255,.05)}
     .habit-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
     .habit-summary div{border:1px solid var(--line);border-radius:12px;background:#100d18;padding:12px}
+    .school-step{border:1px solid var(--line);border-radius:14px;background:#100d18;padding:16px}
+    .school-timeline{display:grid;gap:10px}
     .goal-card{border:1px solid var(--line);border-radius:14px;background:#12101a;padding:16px;display:grid;gap:12px}
     .goal-card .goal-title{display:flex;justify-content:space-between;gap:12px;align-items:start}
     details.evidence{border:1px solid var(--line);border-radius:12px;background:#0d0a13;padding:12px}
@@ -235,6 +261,7 @@
         <button data-view="terms"><span data-icon="search"></span>Terminology</button>
         <button data-view="trophy"><span data-icon="trophy"></span>Trophy Room</button>
         <button data-view="analyzer"><span data-icon="target"></span>Trade Analyzer</button>
+        <button data-view="school"><span data-icon="book"></span>School</button>
       </nav>
       <div class="auth-card" id="authCard">
         <div class="sync-status warn" id="syncStatus">Cloud save: signed out</div>
@@ -259,6 +286,7 @@
         <button class="pill" data-view="calendar"><span data-icon="calendar"></span>Calendar</button>
         <button class="pill" data-view="income"><span data-icon="dollar"></span>Income</button>
         <button class="pill" data-view="habits"><span data-icon="check"></span>Habits</button>
+        <button class="pill" data-view="school"><span data-icon="book"></span>School</button>
         <button class="pill" data-view="goals"><span data-icon="target"></span>Goals</button>
         <button class="pill" data-view="mindset"><span data-icon="bulb"></span>Mindset</button>
       </div>
@@ -302,6 +330,7 @@
           <button class="shortcut" data-view="income"><strong><span data-icon="dollar"></span>Income</strong><span>Log what came in and went out, net by month.</span></button>
           <button class="shortcut" data-view="goals"><strong><span data-icon="target"></span>Goals</strong><span>Weight goal and passing your eval account.</span></button>
           <button class="shortcut" data-view="habits"><strong><span data-icon="check"></span>Habits</strong><span>Rate today's discipline, review, gym, sleep, and food 1-5.</span></button>
+          <button class="shortcut" data-view="school"><strong><span data-icon="book"></span>School</strong><span>Turn classes and assignments into a strategic weekly plan.</span></button>
         </div>
       </section>
 
@@ -425,28 +454,47 @@
       </section>
 
       <section class="view" id="view-analyzer">
-        <div class="page-head"><div class="eyebrow">Trade Analyzer</div><h2>5-minute ICT liquidity verdict.</h2><p class="desc">Upload a 5m chart. Tradecrow reads candles, trend, liquidity pools, sweeps, structure shifts, FVGs, and session context, then returns a long, short, or no-trade bias with exact reasoning.</p></div>
+        <div class="page-head"><div class="eyebrow">Trade Analyzer</div><h2>Multi-timeframe ICT liquidity verdict.</h2><p class="desc">Upload a higher timeframe context chart, the required 5-minute execution chart, and an optional entry/detail screenshot. Tradecrow compares the images, reads liquidity, structure, trend, FVGs, and session context, then returns a clear long, short, or no-trade bias with confidence.</p></div>
         <div class="grid two">
           <div class="card">
             <div class="tag amber" id="aiHealthTag" style="margin-bottom:12px">Checking live AI...</div>
-            <label class="drop" for="setupFile" id="setupDrop" style="min-height:190px"><span><strong>Drop the 5-minute chart screenshot</strong>Use the actual chart you want read. Marked highs/lows, entries, session lines, and liquidity zones help.</span></label>
-            <input id="setupFile" type="file" accept="image/*" hidden>
-            <div class="preview" id="setupPreview"><img id="setupImg" alt="Pre-trade setup screenshot preview"></div>
-            <div class="row" style="margin-top:12px"><button class="btn" id="setupClearBtn">Clear screenshot</button></div>
+            <div class="upload-stack">
+              <div class="upload-slot">
+                <div class="upload-slot-title"><strong>1. Higher timeframe context</strong><span class="tag">Optional</span></div>
+                <label class="drop" for="setupContextFile" id="setupContextDrop"><span><strong>Drop HTF chart</strong>15m, 1h, 4h, or daily bias screenshot.</span></label>
+                <input id="setupContextFile" type="file" accept="image/*" hidden>
+                <div class="preview" id="setupContextPreview"><img id="setupContextImg" alt="Higher timeframe chart preview"></div>
+              </div>
+              <div class="upload-slot required">
+                <div class="upload-slot-title"><strong>2. 5-minute execution chart</strong><span class="tag green">Required</span></div>
+                <label class="drop" for="setupFile" id="setupDrop"><span><strong>Drop the 5-minute chart screenshot</strong>Use the actual chart you want read. Marked highs/lows, entries, session lines, and liquidity zones help.</span></label>
+                <input id="setupFile" type="file" accept="image/*" hidden>
+                <div class="preview" id="setupPreview"><img id="setupImg" alt="Pre-trade setup screenshot preview"></div>
+              </div>
+              <div class="upload-slot">
+                <div class="upload-slot-title"><strong>3. Entry / extra context</strong><span class="tag">Optional</span></div>
+                <label class="drop" for="setupEntryFile" id="setupEntryDrop"><span><strong>Drop entry/detail chart</strong>Optional close-up of the exact area you care about.</span></label>
+                <input id="setupEntryFile" type="file" accept="image/*" hidden>
+                <div class="preview" id="setupEntryPreview"><img id="setupEntryImg" alt="Entry detail chart preview"></div>
+              </div>
+            </div>
+            <div class="row" style="margin-top:12px"><button class="btn" id="setupClearBtn">Clear screenshots</button></div>
             <div class="grid two" style="margin-top:14px">
-              <div><label class="label">Timeframe</label><select id="setupTimeframe"><option selected>5 minute</option><option>1 minute</option><option>15 minute</option><option>1 hour</option></select></div>
+              <div><label class="label">Execution timeframe</label><select id="setupTimeframe"><option selected>5 minute</option><option>1 minute</option><option>15 minute</option><option>1 hour</option></select></div>
               <div><label class="label">Market / symbol</label><input id="setupMarket" placeholder="NQ, ES, EURUSD, BTC..."></div>
               <div><label class="label">Session</label><select id="setupSession"><option>New York AM</option><option>London</option><option>Asia</option><option>New York PM</option><option>Unknown / visible chart only</option></select></div>
               <div><label class="label">Preferred model</label><select id="setupModel"></select></div>
             </div>
-            <label class="label" style="margin-top:14px">Optional context</label><textarea id="setupNotes" placeholder="Example: Price just swept Asia high, waiting for NY AM entry. If you know HTF bias, write it here."></textarea>
-            <button class="btn primary" id="analyzeSetupBtn" style="margin-top:12px">Read 5m chart and give verdict</button>
+            <label class="label" style="margin-top:14px">Optional context</label><textarea id="setupNotes" placeholder="Example: HTF is bearish, price just swept Asia high, waiting for NY AM entry. Tell Tradecrow what each screenshot shows if needed."></textarea>
+            <button class="btn primary" id="analyzeSetupBtn" style="margin-top:12px">Read screenshots and give verdict</button>
           </div>
           <div class="card">
-            <div class="tag amber" id="setupVerdict">Waiting for setup</div>
+            <div class="verdict-frame amber" id="setupVerdictFrame">
+              <div><div class="verdict-title" id="setupVerdict">Waiting for setup</div><div class="small" id="setupVerdictSub">Bias and confidence appear here after analysis.</div></div>
+              <div class="confidence-number" id="setupScore">0%</div>
+            </div>
             <div class="progress" style="margin:16px 0"><span id="setupScoreFill"></span></div>
-            <div class="metric purple" id="setupScore">0%</div>
-            <div id="setupAiBox" class="analysis" style="margin-top:14px">Upload a 5-minute screenshot to get a liquidity-model verdict: long bias, short bias, or no-trade.</div>
+            <div id="setupAiBox" class="analysis" style="margin-top:14px">Upload at least the 5-minute screenshot to get a liquidity-model verdict: long bias, short bias, or no-trade.</div>
             <div class="check-grid" id="setupChecklist"></div>
             <div class="row" style="margin-top:14px">
               <button class="btn good" id="saveSetupReadBtn" disabled>Save this AI read</button>
@@ -457,7 +505,6 @@
           </div>
         </div>
       </section>
-
       <section class="view" id="view-calendar">
         <div class="page-head"><div class="eyebrow">Calendar</div><h2>Days, sessions, and life.</h2><p class="desc">Add trading reviews, gym, classes, meals, and work items.</p></div>
         <div class="card">
@@ -480,7 +527,7 @@
       </section>
 
       <section class="view" id="view-habits">
-        <div class="page-head"><div class="eyebrow">Habits</div><h2>Monthly discipline grid.</h2><p class="desc">Each square is one habit on one day. 1 is darkest, 5 is brightest. Click any square to edit that day, even if it is in the past.</p></div>
+        <div class="page-head"><div class="eyebrow">Habits</div><h2>Daily discipline and monthly rhythm.</h2><p class="desc">Keep the fast 1-5 daily scale, then watch the month form a calendar-style heatmap. Darker purple means stronger discipline. Click any day to edit it.</p></div>
         <div class="card">
           <div class="row" style="justify-content:space-between">
             <div>
@@ -494,9 +541,12 @@
             </div>
           </div>
           <div class="habit-summary" id="habitSummary"></div>
-          <div class="habit-matrix"><div class="habit-table" id="habitGrid"></div></div>
+          <div class="school-step" style="margin-top:16px">
+            <div class="row" style="justify-content:space-between"><div><h3 id="habitDailyTitle" style="margin:0">Today check-in</h3><p class="small" style="margin-top:4px">Tap 1-5 for each lane. 5 means locked in; 1 means it needs attention.</p></div><span class="tag" id="habitSelectedTag">Today</span></div>
+            <div class="habit-daily" id="habitBox"></div>
+          </div>
+          <div class="habit-matrix"><div class="habit-calendar" id="habitGrid"></div></div>
           <div class="analysis" id="habitInsight" style="margin-top:14px"></div>
-          <div id="habitBox" style="display:none"></div>
         </div>
       </section>
       <section class="view" id="view-goals">
@@ -520,6 +570,37 @@
         </div>
       </section>
 
+      <section class="view" id="view-school">
+        <div class="page-head"><div class="eyebrow">School</div><h2>Degree strategy, not another homework list.</h2><p class="desc">Tell Tradecrow who you are as a student, upload assignment screenshots, and let AI decide what deserves deep work, efficient completion, or a smarter shortcut around trading, gym, and life.</p></div>
+        <div class="grid two">
+          <div class="card">
+            <h3 style="margin-top:0">Student profile</h3>
+            <p class="small">This is the context the AI uses before judging assignments. Be honest about what you want, not just what sounds good.</p>
+            <label class="label" style="margin-top:14px">Major / degree path</label><input id="schoolMajor" placeholder="Business, finance, computer science, undecided...">
+            <label class="label" style="margin-top:12px">Classes this term</label><textarea id="schoolClasses" placeholder="Class names, professor style, hardest class, easiest class..."></textarea>
+            <label class="label" style="margin-top:12px">Future target</label><textarea id="schoolFuture" placeholder="What do you want school to help you become? Career, income, skills, network, transfer plans..."></textarea>
+            <label class="label" style="margin-top:12px">Current priorities outside school</label><textarea id="schoolPriorities" placeholder="Trading, gym, carnivore, basketball, work, social life, family, sleep..."></textarea>
+            <div class="grid two" style="margin-top:12px"><div><label class="label">Weekly school hours available</label><input id="schoolHours" type="number" placeholder="12"></div><div><label class="label">Biggest friction</label><input id="schoolFriction" placeholder="Procrastination, unclear assignments..."></div></div>
+            <div class="row" style="margin-top:12px"><button class="btn primary" id="saveSchoolProfileBtn">Save profile</button><button class="btn" id="buildSchoolPlanBtn">Build AI school strategy</button></div>
+            <div class="analysis" id="schoolPlanBox" style="display:none;margin-top:14px"></div>
+          </div>
+          <div class="card">
+            <h3 style="margin-top:0">Assignment scanner</h3>
+            <label class="drop" for="schoolFile" id="schoolDrop"><span><strong>Drop assignment screenshot</strong>Canvas, rubric, prompt, email, or class portal screenshot.</span></label>
+            <input id="schoolFile" type="file" accept="image/*" hidden>
+            <div class="preview" id="schoolPreview"><img id="schoolImg" alt="Assignment screenshot preview"></div>
+            <div class="grid two" style="margin-top:14px"><div><label class="label">Assignment name</label><input id="schoolAssignmentTitle" placeholder="Essay 2, econ quiz..."></div><div><label class="label">Class</label><input id="schoolAssignmentClass" placeholder="English 101"></div><div><label class="label">Due date</label><input id="schoolDueDate" type="date"></div><div><label class="label">Manual estimate hours</label><input id="schoolManualHours" type="number" step="0.25" placeholder="2.5"></div></div>
+            <label class="label" style="margin-top:12px">Importance 1-5</label><select id="schoolImportance"><option value="3">3 - normal</option><option value="5">5 - major grade / future relevant</option><option value="4">4 - important</option><option value="2">2 - quick maintenance</option><option value="1">1 - low leverage</option></select>
+            <label class="label" style="margin-top:12px">Notes</label><textarea id="schoolAssignmentNotes" placeholder="Rubric details, what you already know, what confuses you, grade weight..."></textarea>
+            <div class="row" style="margin-top:12px"><button class="btn primary" id="analyzeSchoolBtn">Analyze with AI</button><button class="btn good" id="saveSchoolAssignmentBtn">Save assignment</button><button class="btn" id="clearSchoolImageBtn">Clear image</button></div>
+            <div class="analysis" id="schoolAiBox" style="display:none;margin-top:14px"></div>
+          </div>
+        </div>
+        <div class="grid two" style="margin-top:16px">
+          <div class="card"><h3 style="margin-top:0">Assignment command board</h3><div class="school-timeline" id="schoolAssignmentList"></div></div>
+          <div class="card"><h3 style="margin-top:0">Why the degree can matter</h3><div class="analysis"><strong>Research-backed direction:</strong> The Bureau of Labor Statistics regularly shows higher education is associated with higher median earnings and lower unemployment, though it never guarantees a specific outcome.<br><br><strong>Use it strategically:</strong> your degree is most valuable when it creates skill, proof, network, internships, and career options. Tradecrow should help you protect time for high-leverage school work while still keeping trading, gym, and social life alive.<br><br><a href="https://www.bls.gov/emp/tables/unemployment-earnings-education.htm" target="_blank" rel="noreferrer">BLS Education Pays</a> | <a href="https://www.bls.gov/ooh/occupation-finder.htm" target="_blank" rel="noreferrer">BLS Occupation Finder</a></div></div>
+        </div>
+      </section>
       <section class="view" id="view-mindset">
         <div class="page-head"><div class="eyebrow">Mindset</div><h2>Keep your head straight.</h2><p class="desc">Reframe spirals with your trading profile attached: recent mistakes, rule breaks, and wins.</p></div>
         <div class="card">
@@ -653,12 +734,17 @@
     let chartDataUrl = "";
     let chartAnalysis = "";
     let setupDataUrl = "";
+    let setupContextDataUrl = "";
+    let setupEntryDataUrl = "";
     let currentSetupRead = null;
     let authSession = loadAuthSession();
     let cloudItemId = "";
     let cloudSaveTimer = null;
     let cloudLoading = false;
     let habitMonthCursor = new Date();
+    let habitEditDate = today();
+    let schoolImageDataUrl = "";
+    let schoolAnalysis = "";
 
     function load(){
       try{return JSON.parse(localStorage.getItem(STORE)) || blank();}
@@ -683,6 +769,9 @@
       state.trophies ||= [];
       state.drafts ||= {};
       state.currentDay ||= today();
+      state.school ||= {profile:{},assignments:[],plan:""};
+      state.school.profile ||= {};
+      state.school.assignments ||= [];
     }
     function persist(){ localStorage.setItem(STORE, JSON.stringify(state)); scheduleCloudSave(); }
     function save(){ persist(); refreshAll(); }
@@ -860,7 +949,7 @@
       Object.assign(state, blank(), next || {});
       ensureState();
       localStorage.setItem(STORE, JSON.stringify(state));
-      refreshAll();renderRules();renderTerms();renderModels();renderCalendar();renderMoney();renderHabits();renderTrophies();renderSetupHistory();renderLibrary();renderGoals();
+      refreshAll();renderRules();renderTerms();renderModels();renderCalendar();renderMoney();renderHabits();renderSchool();renderTrophies();renderSetupHistory();renderLibrary();renderGoals();
     }
     function scheduleCloudSave(){
       if(!authSession || !authSession.access_token || cloudLoading) return;
@@ -946,6 +1035,7 @@
         return `**Verdict: Situational - needs context**\nThis rule can be useful if it is tied to liquidity, structure, and invalidation. Do not let it become automatic. A good version says when the rule applies, what confirms it, and what cancels it.`;
       }
       if(task==="mindset") return `**More accurate read**\nOne trade is data, not identity. Your next job is not to feel confident; it is to follow the smallest rule that prevents the repeated mistake: ${p.worstMistake}.\n\n**Next action**\nBefore the next entry, say the invalidation out loud and check it against your written rules.`;
+      if(task==="school") return `**Best next move**\nSave your school profile, then upload the assignment screenshot. Until live AI reads the screenshot, use this fallback: protect assignments that build your degree, career skill, or GPA pressure first, then batch low-leverage tasks into short blocks.\n\n**Time estimate**\nStart with 25 minutes to understand the prompt, then decide whether it is deep work, efficient completion, or professor/classmate clarification.\n\n**Schedule fit**\nDo not steal time from sleep or your highest-quality trading review block unless the assignment is due soon or heavily weighted.`;
       return `**Research note**\nThis concept only becomes useful when it is attached to a repeatable model. For your current profile, connect it to ${p.bestSetup}, then define the invalidation and the condition that makes you pass.`;
     }
 
@@ -960,6 +1050,7 @@
       if(view==="calendar") renderCalendar();
       if(view==="income") renderMoney();
       if(view==="habits") renderHabits();
+      if(view==="school") renderSchool();
       if(view==="goals") renderGoals();
       if(view==="trophy") renderTrophies();
       if(view==="terms") renderTerms();
@@ -1025,13 +1116,20 @@
       $("saveTradeBtn").addEventListener("click",saveTrade);
     }
     function initSetupImage(){
-      $("setupFile").addEventListener("change",e=>e.target.files[0]&&readSetupImage(e.target.files[0]));
-      $("setupDrop").addEventListener("dragover",e=>e.preventDefault());
-      $("setupDrop").addEventListener("drop",e=>{e.preventDefault(); if(e.dataTransfer.files[0]) readSetupImage(e.dataTransfer.files[0]);});
-      $("setupClearBtn").addEventListener("click",()=>{setupDataUrl="";currentSetupRead=null;$("setupFile").value="";$("setupPreview").style.display="none";$("saveSetupReadBtn").disabled=true;$("setupGoodBtn").disabled=true;$("setupBadBtn").disabled=true;renderSetupChecklist([]);});
+      bindImageDrop("setupFile","setupDrop",file=>readSetupImage(file,"execution"));
+      bindImageDrop("setupContextFile","setupContextDrop",file=>readSetupImage(file,"context"));
+      bindImageDrop("setupEntryFile","setupEntryDrop",file=>readSetupImage(file,"entry"));
+      $("setupClearBtn").addEventListener("click",()=>{clearSetupScreens();});
       $("saveSetupReadBtn").addEventListener("click",saveCurrentSetupRead);
       $("setupGoodBtn").addEventListener("click",()=>setSetupFeedback("helped"));
       $("setupBadBtn").addEventListener("click",()=>setSetupFeedback("missed"));
+    }
+    function bindImageDrop(fileId,dropId,handler){
+      const file=$(fileId), drop=$(dropId);
+      if(!file||!drop) return;
+      file.addEventListener("change",e=>e.target.files[0]&&handler(e.target.files[0]));
+      drop.addEventListener("dragover",e=>e.preventDefault());
+      drop.addEventListener("drop",e=>{e.preventDefault(); if(e.dataTransfer.files[0]) handler(e.dataTransfer.files[0]);});
     }
     function readChart(file){
       if(!file.type.startsWith("image/")) return toast("Upload an image");
@@ -1039,11 +1137,23 @@
       reader.onload=()=>{chartDataUrl=reader.result;$("tradeImg").src=chartDataUrl;$("tradePreview").style.display="block";$("tradeAnalyzeBtn").disabled=false;};
       reader.readAsDataURL(file);
     }
-    function readSetupImage(file){
+    function readSetupImage(file,slot="execution"){
       if(!file.type.startsWith("image/")) return toast("Upload a setup screenshot");
       const reader=new FileReader();
-      reader.onload=()=>{setupDataUrl=reader.result;$("setupImg").src=setupDataUrl;$("setupPreview").style.display="block";};
+      reader.onload=()=>{
+        if(slot==="context"){setupContextDataUrl=reader.result;$("setupContextImg").src=setupContextDataUrl;$("setupContextPreview").style.display="block";}
+        else if(slot==="entry"){setupEntryDataUrl=reader.result;$("setupEntryImg").src=setupEntryDataUrl;$("setupEntryPreview").style.display="block";}
+        else {setupDataUrl=reader.result;$("setupImg").src=setupDataUrl;$("setupPreview").style.display="block";}
+      };
       reader.readAsDataURL(file);
+    }
+    function clearSetupScreens(){
+      setupDataUrl="";setupContextDataUrl="";setupEntryDataUrl="";currentSetupRead=null;
+      ["setupFile","setupContextFile","setupEntryFile"].forEach(id=>{if($(id)) $(id).value="";});
+      ["setupPreview","setupContextPreview","setupEntryPreview"].forEach(id=>{if($(id)) $(id).style.display="none";});
+      $("saveSetupReadBtn").disabled=true;$("setupGoodBtn").disabled=true;$("setupBadBtn").disabled=true;
+      $("setupVerdict").textContent="Waiting for setup";$("setupVerdictFrame").className="verdict-frame amber";$("setupScore").textContent="0%";$("setupScoreFill").style.width="0%";
+      renderSetupChecklist([]);
     }
     async function analyzeChart(){
       $("tradeAiBox").style.display="block";
@@ -1142,13 +1252,16 @@
       if(/\b(LONG BIAS|BUY BIAS|BUY|LONG)\b/.test(upper) && !/\bNO-TRADE\b/.test(upper)){label="LONG / BUY BIAS";cls="green";score=82;}
       if(/\b(SHORT BIAS|SELL BIAS|SELL|SHORT)\b/.test(upper) && !/\bNO-TRADE\b/.test(upper)){label="SHORT / SELL BIAS";cls="red";score=82;}
       if(/\bNO-TRADE|WAIT|PASS\b/.test(upper)){label="NO-TRADE / WAIT";cls="amber";score=52;}
+      const stated=(text||"").match(/confidence[^0-9]{0,30}(\d{1,3})\s*%?/i);
+      if(stated) score=Math.max(0,Math.min(100,Number(stated[1])||score));
       if(/\bUNCLEAR|LOW CONFIDENCE|SCREENSHOT IS UNCLEAR\b/.test(upper)) score=Math.min(score,44);
       return {label,cls,score};
     }
     function applySetupVerdict(text){
       const meta=setupVerdictMeta(text);
       $("setupVerdict").textContent=meta.label;
-      $("setupVerdict").className="tag "+meta.cls;
+      $("setupVerdictFrame").className="verdict-frame "+meta.cls;
+      $("setupVerdictSub").textContent=meta.cls==="green"?"Long-side model only if invalidation is clean.":meta.cls==="red"?"Short-side model only if invalidation is clean.":"Wait until liquidity + structure line up.";
       $("setupScoreFill").style.width=meta.score+"%";
       $("setupScore").textContent=meta.score+"%";
       return meta;
@@ -1193,17 +1306,20 @@
     $("analyzeSetupBtn").addEventListener("click",async()=>{
       if(!setupDataUrl) return toast("Upload a 5-minute chart screenshot first");
       $("setupVerdict").textContent="Reading 5m chart";
-      $("setupVerdict").className="tag amber";
+      $("setupVerdictFrame").className="verdict-frame amber";
       $("setupScoreFill").style.width="18%";
       $("setupScore").textContent="...";
       $("setupAiBox").textContent="Reading candles, trend, liquidity pools, sweeps, structure, FVGs, and invalidation...";
+      const imageDataUrls=[setupContextDataUrl,setupDataUrl,setupEntryDataUrl].filter(Boolean);
       const prompt=[
-        "Read this as a 5-minute trading chart screenshot.",
+        "Read the attached screenshots in this order when present: 1 higher timeframe context, 2 required 5-minute execution chart, 3 optional entry/detail chart.",
         "Use ICT concepts but focus mostly on liquidity models.",
-        "Give a directional verdict from the visible screenshot only: LONG BIAS / BUY, SHORT BIAS / SELL, or NO-TRADE / WAIT.",
+        "Give a directional verdict from the visible screenshots only: LONG BIAS / BUY, SHORT BIAS / SELL, or NO-TRADE / WAIT.",
         "Do not give certainty or a guaranteed signal. Make it decision-support.",
         "Required markdown sections:",
         "**Verdict** - one line with LONG BIAS, SHORT BIAS, or NO-TRADE.",
+        "**Confidence** - 0-100% with one sentence about what lowers confidence.",
+        "**Higher timeframe context** - only if a context screenshot is attached.",
         "**Overall 5m trend** - bullish, bearish, ranging, or unclear, with candle/structure evidence.",
         "**Liquidity map** - identify likely buy-side and sell-side liquidity from the screenshot.",
         "**Sweep / manipulation** - say whether price appears to have swept highs/lows or not.",
@@ -1213,10 +1329,10 @@
         "**Invalidation** - what visible level makes the idea wrong.",
         "**Why this can fail** - one concrete failure condition."
       ].join("\\n");
-      const text=await ai("setup",{prompt,timeframe:$("setupTimeframe").value,market:$("setupMarket").value,session:$("setupSession").value,model:$("setupModel").value,notes:$("setupNotes").value,imageDataUrl:setupDataUrl,priorAiReads:(state.setupReads||[]).slice(0,6)});
+      const text=await ai("setup",{prompt,timeframe:$("setupTimeframe").value,market:$("setupMarket").value,session:$("setupSession").value,model:$("setupModel").value,notes:$("setupNotes").value,imageDataUrls,priorAiReads:(state.setupReads||[]).slice(0,6)});
       const meta=applySetupVerdict(text);
       const checklist=setupChecklistFromText(text);
-      currentSetupRead={id:String(Date.now()),date:today(),market:$("setupMarket").value,session:$("setupSession").value,timeframe:$("setupTimeframe").value,model:$("setupModel").value,notes:$("setupNotes").value,verdict:meta.label,cls:meta.cls,score:meta.score,text,checklist,image:setupDataUrl,createdAt:Date.now()};
+      currentSetupRead={id:String(Date.now()),date:today(),market:$("setupMarket").value,session:$("setupSession").value,timeframe:$("setupTimeframe").value,model:$("setupModel").value,notes:$("setupNotes").value,verdict:meta.label,cls:meta.cls,score:meta.score,text,checklist,image:setupDataUrl,images:{context:setupContextDataUrl,execution:setupDataUrl,entry:setupEntryDataUrl},createdAt:Date.now()};
       renderSetupChecklist(checklist);
       $("saveSetupReadBtn").disabled=false;
       $("setupGoodBtn").disabled=false;
@@ -1499,44 +1615,50 @@
       const monthKey=`${y}-${String(m+1).padStart(2,"0")}`;
       const title=habitMonthCursor.toLocaleDateString(undefined,{month:"long",year:"numeric"});
       if($("habitMonthTitle")) $("habitMonthTitle").textContent=title;
-      let html='<div class="habit-cell name">Habit</div>';
-      for(let d=1;d<=31;d++) html+=`<div class="habit-cell day-head">${d<=daysInMonth?d:""}</div>`;
-      habits.forEach(h=>{
-        html+=`<button class="habit-cell name" data-habit-row="${esc(h)}">${esc(h)}</button>`;
-        for(let d=1;d<=31;d++){
-          if(d>daysInMonth){html+='<div class="habit-cell"></div>';continue;}
-          const date=`${monthKey}-${String(d).padStart(2,"0")}`;
-          const score=Number(state.habits?.[date]?.[h]||0);
-          html+=`<button class="habit-cell ${score?`score-${score}`:""}" title="${esc(h)} - ${date} - ${score||"not rated"}" data-habit="${esc(h)}" data-date="${date}">${score||""}</button>`;
-        }
-      });
-      $("habitGrid").innerHTML=html;
-      const scores=[];
-      for(let d=1;d<=daysInMonth;d++){
-        const date=`${monthKey}-${String(d).padStart(2,"0")}`;
-        habits.forEach(h=>{const v=Number(state.habits?.[date]?.[h]||0); if(v) scores.push(v);});
-      }
-      const avg=scores.length?Number((scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1)):0;
-      const rated=scores.length;
-      const possible=daysInMonth*habits.length;
-      const bright=scores.filter(v=>v>=4).length;
-      const dark=scores.filter(v=>v<=2).length;
-      $("habitSummary").innerHTML=`<div><b>${avg||"-"}/5</b><span class="small">Monthly average</span></div><div><b>${rated}/${possible}</b><span class="small">Squares rated</span></div><div><b>${bright}</b><span class="small">Strong squares</span></div><div><b>${dark}</b><span class="small">Weak squares</span></div>`;
-      $("habitInsight").innerHTML=`<strong>Read:</strong> ${rated?`${Math.round(rated/possible*100)}% of the month is filled. ${bright>=dark?"Discipline is skewing lighter than darker.":"Dark squares are leading this month, so pick one habit to rescue first."}`:"Start by rating today. The grid gets useful after a few days."}<br><strong>Edit:</strong> click any square, type 1-5, or leave blank to clear it.`;
-      $("habitGrid").querySelectorAll("[data-habit][data-date]").forEach(btn=>btn.addEventListener("click",()=>{
-        const habit=btn.dataset.habit, date=btn.dataset.date;
-        const current=state.habits?.[date]?.[habit]||"";
-        const value=prompt(`${habit}\n${date}\nRate 1-5, or blank to clear:`, current);
-        if(value===null) return;
-        state.habits[date]=state.habits[date]||{};
-        if(value.trim()==="") delete state.habits[date][habit];
-        else {
-          const n=Math.max(1,Math.min(5,Number(value)||0));
-          if(!n) return toast("Use a number from 1 to 5");
-          state.habits[date][habit]=n;
-        }
+      state.habits[habitEditDate] ||= {};
+      const selected=new Date(habitEditDate+"T00:00:00");
+      const selectedLabel=selected.toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"});
+      $("habitDailyTitle").textContent=habitEditDate===today()?"Today check-in":selectedLabel+" check-in";
+      $("habitSelectedTag").textContent=habitEditDate===today()?"Today":habitEditDate;
+      $("habitBox").innerHTML=habits.map(h=>{
+        const score=Number(state.habits?.[habitEditDate]?.[h]||0);
+        return `<article class="habit-card"><div><strong>${esc(h)}</strong><div class="small">${score?`Rated ${score}/5`:"Tap a score for this date"}</div></div><div class="habit-rater">${[1,2,3,4,5].map(n=>`<button class="${score===n?"active":""}" data-habit="${esc(h)}" data-rate="${n}" title="${n}/5">${n}</button>`).join("")}</div></article>`;
+      }).join("");
+      $("habitBox").querySelectorAll("[data-habit][data-rate]").forEach(btn=>btn.addEventListener("click",()=>{
+        const h=btn.dataset.habit, n=Number(btn.dataset.rate);
+        state.habits[habitEditDate] ||= {};
+        state.habits[habitEditDate][h]=n;
         save(); renderHabits();
       }));
+      let html=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d=>`<div class="habit-weekday">${d}</div>`).join("");
+      const firstDay=new Date(y,m,1).getDay();
+      for(let i=0;i<firstDay;i++) html+='<div></div>';
+      const dayAverages=[];
+      for(let d=1;d<=daysInMonth;d++){
+        const date=`${monthKey}-${String(d).padStart(2,"0")}`;
+        const dayScores=habits.map(h=>Number(state.habits?.[date]?.[h]||0)).filter(Boolean);
+        const avg=dayScores.length?dayScores.reduce((a,b)=>a+b,0)/dayScores.length:0;
+        if(avg) dayAverages.push(avg);
+        const scoreClass=avg?`score-${Math.round(avg)}`:"empty";
+        const label=avg>=4.5?"Locked in":avg>=3.5?"Strong":avg>=2.5?"Mixed":avg>0?"Light day":"Empty";
+        html+=`<button class="habit-day-tile ${scoreClass} ${date===habitEditDate?"active":""}" data-date="${date}" title="${date} - ${avg?avg.toFixed(1)+"/5":"not rated"}"><span class="day-num">${d}</span><span class="day-label">${esc(label)}</span></button>`;
+      }
+      $("habitGrid").innerHTML=html;
+      $("habitGrid").querySelectorAll("[data-date]").forEach(btn=>btn.addEventListener("click",()=>{
+        habitEditDate=btn.dataset.date;
+        renderHabits();
+      }));
+      const allScores=[];
+      for(let d=1;d<=daysInMonth;d++){
+        const date=`${monthKey}-${String(d).padStart(2,"0")}`;
+        habits.forEach(h=>{const v=Number(state.habits?.[date]?.[h]||0); if(v) allScores.push(v);});
+      }
+      const avg=allScores.length?Number((allScores.reduce((a,b)=>a+b,0)/allScores.length).toFixed(1)):0;
+      const filledDays=dayAverages.length;
+      const strongDays=dayAverages.filter(v=>v>=4).length;
+      const weakDays=dayAverages.filter(v=>v>0&&v<2.5).length;
+      $("habitSummary").innerHTML=`<div><b>${avg||"-"}/5</b><span class="small">Monthly average</span></div><div><b>${filledDays}/${daysInMonth}</b><span class="small">Days checked</span></div><div><b>${strongDays}</b><span class="small">Dark strong days</span></div><div><b>${weakDays}</b><span class="small">Light recovery days</span></div>`;
+      $("habitInsight").innerHTML=`<strong>Read:</strong> ${filledDays?`${Math.round(filledDays/daysInMonth*100)}% of ${title} has a check-in. Darker tiles are the days where discipline stacked across food, gym, focus, trading rules, and sleep.`:"Start with today's check-in. The calendar becomes useful after a few honest days."}<br><strong>Edit:</strong> click a day on the calendar, then use the daily 1-5 buttons above.`;
     }
     $("habitPrevMonth")?.addEventListener("click",()=>{habitMonthCursor=new Date(habitMonthCursor.getFullYear(),habitMonthCursor.getMonth()-1,1);renderHabits();});
     $("habitThisMonth")?.addEventListener("click",()=>{habitMonthCursor=new Date();renderHabits();});
@@ -1547,6 +1669,100 @@
       $("trophyList").querySelectorAll("[data-trophy]").forEach(b=>b.addEventListener("click",()=>{state.trophies.splice(Number(b.dataset.trophy),1);save();renderTrophies();}));
     }
     $("saveTrophyBtn").addEventListener("click",()=>{state.trophies.unshift({type:$("trophyType").value,amount:Number($("trophyAmount").value)||0,date:$("trophyDate").value||today(),note:$("trophyNote").value.trim()});$("trophyAmount").value="";$("trophyNote").value="";save();renderTrophies();});
+
+    function initSchool(){
+      bindImageDrop("schoolFile","schoolDrop",readSchoolImage);
+      ["schoolMajor","schoolClasses","schoolFuture","schoolPriorities","schoolHours","schoolFriction"].forEach(id=>$(id)?.addEventListener("input",()=>{state.school.profile=schoolProfileFromInputs();persist();}));
+      $("saveSchoolProfileBtn")?.addEventListener("click",()=>{saveSchoolProfile();toast("School profile saved");});
+      $("buildSchoolPlanBtn")?.addEventListener("click",buildSchoolPlan);
+      $("analyzeSchoolBtn")?.addEventListener("click",analyzeSchoolAssignment);
+      $("saveSchoolAssignmentBtn")?.addEventListener("click",saveSchoolAssignment);
+      $("clearSchoolImageBtn")?.addEventListener("click",()=>{schoolImageDataUrl="";$("schoolFile").value="";$("schoolPreview").style.display="none";});
+    }
+    function readSchoolImage(file){
+      if(!file.type.startsWith("image/")) return toast("Upload an assignment screenshot");
+      const reader=new FileReader();
+      reader.onload=()=>{schoolImageDataUrl=reader.result;$("schoolImg").src=schoolImageDataUrl;$("schoolPreview").style.display="block";};
+      reader.readAsDataURL(file);
+    }
+    function schoolProfileFromInputs(){
+      return {
+        major:$("schoolMajor").value.trim(),
+        classes:$("schoolClasses").value.trim(),
+        future:$("schoolFuture").value.trim(),
+        priorities:$("schoolPriorities").value.trim(),
+        weeklyHours:Number($("schoolHours").value)||0,
+        friction:$("schoolFriction").value.trim()
+      };
+    }
+    function saveSchoolProfile(){
+      state.school.profile=schoolProfileFromInputs();
+      persist();
+    }
+    function schoolAssignmentDraft(){
+      return {
+        title:$("schoolAssignmentTitle").value.trim()||"Untitled assignment",
+        className:$("schoolAssignmentClass").value.trim(),
+        dueDate:$("schoolDueDate").value,
+        manualHours:Number($("schoolManualHours").value)||0,
+        importance:Number($("schoolImportance").value)||3,
+        notes:$("schoolAssignmentNotes").value.trim()
+      };
+    }
+    async function buildSchoolPlan(){
+      saveSchoolProfile();
+      $("schoolPlanBox").style.display="block";
+      $("schoolPlanBox").textContent="Building a school strategy around your classes, goals, trading, gym, and social life...";
+      const text=await ai("school",{mode:"profile-plan",profile:state.school.profile,assignments:state.school.assignments.slice(0,8)});
+      state.school.plan=text;
+      persist();
+      $("schoolPlanBox").innerHTML=md(text);
+    }
+    async function analyzeSchoolAssignment(){
+      saveSchoolProfile();
+      const assignment=schoolAssignmentDraft();
+      $("schoolAiBox").style.display="block";
+      $("schoolAiBox").textContent="Reading assignment details and deciding the smartest use of time...";
+      schoolAnalysis=await ai("school",{mode:"assignment-analysis",profile:state.school.profile,assignment,imageDataUrls:schoolImageDataUrl?[schoolImageDataUrl]:[],lifeContext:{tradingProfile:profile(),todayHabits:state.habits?.[today()]||{},goals:[state.goal,state.weight,...(state.customGoals||[])]}});
+      $("schoolAiBox").innerHTML=md(schoolAnalysis);
+    }
+    function saveSchoolAssignment(){
+      const assignment=schoolAssignmentDraft();
+      state.school.assignments.unshift({...assignment,id:String(Date.now()),image:schoolImageDataUrl,analysis:schoolAnalysis,createdAt:Date.now(),done:false});
+      ["schoolAssignmentTitle","schoolAssignmentClass","schoolDueDate","schoolManualHours","schoolAssignmentNotes"].forEach(id=>{if($(id)) $(id).value="";});
+      schoolImageDataUrl="";schoolAnalysis="";
+      if($("schoolFile")) $("schoolFile").value="";
+      if($("schoolPreview")) $("schoolPreview").style.display="none";
+      if($("schoolAiBox")) {$("schoolAiBox").style.display="none";$("schoolAiBox").textContent="";}
+      save();renderSchool();toast("Assignment saved");
+    }
+    function urgencyLabel(date){
+      if(!date) return {label:"No due date",cls:""};
+      const days=Math.ceil((new Date(date+"T23:59:59")-new Date())/86400000);
+      if(days<0) return {label:"Past due",cls:"red"};
+      if(days<=1) return {label:"Due now",cls:"red"};
+      if(days<=3) return {label:`${days} days`,cls:"amber"};
+      return {label:`${days} days`,cls:"green"};
+    }
+    function renderSchool(){
+      if(!$("schoolAssignmentList")) return;
+      const p=state.school.profile||{};
+      if(!isFocused("schoolMajor")) $("schoolMajor").value=p.major||"";
+      if(!isFocused("schoolClasses")) $("schoolClasses").value=p.classes||"";
+      if(!isFocused("schoolFuture")) $("schoolFuture").value=p.future||"";
+      if(!isFocused("schoolPriorities")) $("schoolPriorities").value=p.priorities||"";
+      if(!isFocused("schoolHours")) $("schoolHours").value=p.weeklyHours||"";
+      if(!isFocused("schoolFriction")) $("schoolFriction").value=p.friction||"";
+      if(state.school.plan){$("schoolPlanBox").style.display="block";$("schoolPlanBox").innerHTML=md(state.school.plan);}
+      const items=state.school.assignments||[];
+      $("schoolAssignmentList").innerHTML=items.length?items.map(a=>{
+        const urgent=urgencyLabel(a.dueDate);
+        const estimate=a.manualHours?`${a.manualHours}h manual estimate`:"No manual estimate";
+        return `<article class="entry"><div class="entry-head"><div><h3>${esc(a.title)}</h3><p>${esc(a.className||"Class not set")} - ${esc(a.dueDate||"No due date")} - ${esc(estimate)}</p></div><span class="tag ${urgent.cls}">${esc(urgent.label)}</span></div>${a.image?`<img src="${a.image}" alt="" style="width:100%;max-height:220px;object-fit:contain;background:#050409;border:1px solid var(--line);border-radius:12px">`:""}<div class="row"><span class="tag">Importance ${esc(a.importance||3)}/5</span>${a.done?`<span class="tag green">Done</span>`:""}</div>${a.notes?`<div class="modal-note">${esc(a.notes)}</div>`:""}${a.analysis?`<details class="evidence"><summary>Open AI assignment strategy</summary><div class="analysis" style="margin-top:12px">${md(a.analysis)}</div></details>`:""}<div class="row"><button class="btn good" data-school-done="${a.id}">${a.done?"Reopen":"Mark done"}</button><button class="btn danger" data-school-del="${a.id}">Delete</button></div></article>`;
+      }).join(""):`<div class="modal-note">No assignments saved yet. Upload a screenshot, let AI read it, then save the assignment here.</div>`;
+      $("schoolAssignmentList").querySelectorAll("[data-school-done]").forEach(b=>b.addEventListener("click",()=>{const a=state.school.assignments.find(x=>x.id===b.dataset.schoolDone);if(a)a.done=!a.done;save();renderSchool();}));
+      $("schoolAssignmentList").querySelectorAll("[data-school-del]").forEach(b=>b.addEventListener("click",()=>{state.school.assignments=state.school.assignments.filter(x=>x.id!==b.dataset.schoolDel);save();renderSchool();}));
+    }
 
     $("mindsetBtn").addEventListener("click",async()=>{const text=$("mindsetInput").value.trim();if(!text)return toast("Write the thought first");$("mindsetBox").style.display="block";$("mindsetBox").textContent="Reframing with your recent data...";$("mindsetBox").innerHTML=md(await ai("mindset",{text}));});
 
@@ -1597,6 +1813,7 @@
         initInputs();
         initChart();
         initSetupImage();
+        initSchool();
         initAuth();
         renderRules();
         renderTerms();
@@ -1604,6 +1821,7 @@
         renderCalendar();
         renderMoney();
         renderHabits();
+        renderSchool();
         renderTrophies();
         refreshAll();
         startLiveDayClock();
@@ -1620,6 +1838,12 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
 
 
 

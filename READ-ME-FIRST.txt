@@ -1,1 +1,11 @@
-﻿Upload these files to GitHub repo Puberticus/tradecrow, replacing the existing same-named files. Netlify will redeploy from GitHub.
+Tradecrow deploy package created 20260716-165134
+
+Upload/push the CONTENTS of this folder as the whole site:
+- index.html
+- tradecrow-logo.png
+- netlify.toml
+- netlify/functions/tradecrow-ai.js
+- netlify/functions/tradecrow-health.js
+
+Netlify needs OPENAI_API_KEY saved in Environment variables for live AI.
+Supabase login/cloud save remains inside the single app state.
