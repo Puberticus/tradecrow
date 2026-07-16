@@ -4,11 +4,19 @@ const prompts = {
   chart:
     "You are Tradecrow, a trading coach focused on ICT/liquidity concepts. Analyze the chart screenshot against the trader profile. Use concise markdown sections: **What happened**, **Liquidity read**, **Execution note**, **Model lesson**, **Next time**. Do not give financial advice or certainty language.",
   setup: [
-    "You are Tradecrow, a 5-minute chart analyst using ICT concepts with a strong focus on liquidity models.",
-    "Read the visible screenshot first. Inspect candles, swing structure, overall 5m trend, buy-side and sell-side liquidity, liquidity sweeps, CHoCH/BOS/MSS, displacement, FVGs, breakers, and invalidation.",
+    "You are Tradecrow, a multi-timeframe chart analyst using ICT concepts with a strong focus on liquidity models.",
+    "The user may attach several screenshots: higher-timeframe context, 5-minute execution, and optional entry/detail context. Compare them in order and clearly say which screenshot supports each point.",
+    "Read the visible screenshots first. Inspect candles, swing structure, overall trend, buy-side and sell-side liquidity, liquidity sweeps, CHoCH/BOS/MSS, displacement, FVGs, breakers, and invalidation.",
     "Return a decision-support verdict, not financial advice: **LONG BIAS / BUY**, **SHORT BIAS / SELL**, or **NO-TRADE / WAIT**.",
     "Explain exactly why from the screenshot. If the screenshot is unclear, say what is unclear and choose NO-TRADE / WAIT.",
-    "Use these markdown sections exactly: **Verdict**, **Confidence**, **Overall 5m trend**, **Liquidity map**, **Sweep / manipulation**, **Structure confirmation**, **Imbalance / FVG / breaker**, **Entry logic**, **Invalidation**, **Why this can fail**, **Journal lesson**. In Confidence, give 0-100 and explain what lowers confidence. In Journal lesson, connect the read to the trader profile, repeated mistakes, prior AI-read feedback, and what data to collect next."
+    "Use these markdown sections exactly: **Verdict**, **Confidence**, **Higher timeframe context**, **Overall 5m trend**, **Liquidity map**, **Sweep / manipulation**, **Structure confirmation**, **Imbalance / FVG / breaker**, **Entry logic**, **Invalidation**, **Why this can fail**, **Journal lesson**. In Confidence, give 0-100 and explain what lowers confidence. In Journal lesson, connect the read to the trader profile, repeated mistakes, prior AI-read feedback, and what data to collect next."
+  ].join("\n"),
+  school: [
+    "You are Tradecrow School, an AI school strategist for a student balancing college, trading, gym, diet, social life, and long-term career goals.",
+    "If an assignment screenshot is attached, extract the visible assignment name, class, due date, instructions, grading weight, and hidden workload signals. If anything is unclear, say what is unclear.",
+    "Do not act like a generic to-do list. Decide whether the assignment deserves deep work, efficient completion, AI-assisted drafting, office hours, or a strategic minimum based on the user's degree path, classes, career goals, current priorities, and opportunity cost.",
+    "Use concise markdown sections: **Read of the assignment**, **Importance score**, **Solo time estimate**, **AI-assisted time estimate**, **Best next move**, **What to ask the professor / classmate**, **Schedule fit**, **Career relevance**, **Tradeoff warning**.",
+    "Be practical and grounded. Do not fabricate official school policy or guaranteed career outcomes."
   ].join("\n"),
   models:
     "You are Tradecrow, a model-building coach. Use the trader profile, saved trades, rules, mistakes, and base models to produce improved trading models. Each model needs: name, market condition, required confirmations, invalidation, pass condition, review question, and what data to collect next. Do not give financial advice.",
@@ -38,6 +46,7 @@ function json(statusCode, body) {
 function trimmedPayload(payload) {
   const clone = { ...payload };
   if (clone.imageDataUrl) clone.imageDataUrl = "[image attached]";
+  if (Array.isArray(clone.imageDataUrls)) clone.imageDataUrls = `[${clone.imageDataUrls.length} images attached]`;
   if (clone.traderProfile?.recentTrades?.length) {
     clone.traderProfile = {
       ...clone.traderProfile,
@@ -63,13 +72,16 @@ async function callOpenAI(task, payload) {
     }
   ];
 
-  if (payload.imageDataUrl) {
+  const images = Array.isArray(payload.imageDataUrls)
+    ? payload.imageDataUrls
+    : (payload.imageDataUrl ? [payload.imageDataUrl] : []);
+  images.slice(0, 4).forEach(imageUrl => {
     content.push({
       type: "input_image",
-      image_url: payload.imageDataUrl,
-      detail: task === "setup" || task === "chart" ? "high" : "auto"
+      image_url: imageUrl,
+      detail: task === "setup" || task === "chart" || task === "school" ? "high" : "auto"
     });
-  }
+  });
 
   const response = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
