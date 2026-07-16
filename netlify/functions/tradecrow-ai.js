@@ -1,4 +1,4 @@
-const model = process.env.OPENAI_MODEL || "gpt-4.1";
+﻿const model = process.env.OPENAI_MODEL || "gpt-4.1";
 
 const prompts = {
   chart:
@@ -8,7 +8,7 @@ const prompts = {
     "Read the visible screenshot first. Inspect candles, swing structure, overall 5m trend, buy-side and sell-side liquidity, liquidity sweeps, CHoCH/BOS/MSS, displacement, FVGs, breakers, and invalidation.",
     "Return a decision-support verdict, not financial advice: **LONG BIAS / BUY**, **SHORT BIAS / SELL**, or **NO-TRADE / WAIT**.",
     "Explain exactly why from the screenshot. If the screenshot is unclear, say what is unclear and choose NO-TRADE / WAIT.",
-    "Use these markdown sections: **Verdict**, **Overall 5m trend**, **Liquidity map**, **Sweep / manipulation**, **Structure confirmation**, **Imbalance / FVG / breaker**, **Entry logic**, **Invalidation**, **Why this can fail**."
+    "Use these markdown sections exactly: **Verdict**, **Confidence**, **Overall 5m trend**, **Liquidity map**, **Sweep / manipulation**, **Structure confirmation**, **Imbalance / FVG / breaker**, **Entry logic**, **Invalidation**, **Why this can fail**, **Journal lesson**. In Confidence, give 0-100 and explain what lowers confidence. In Journal lesson, connect the read to the trader profile, repeated mistakes, prior AI-read feedback, and what data to collect next."
   ].join("\n"),
   models:
     "You are Tradecrow, a model-building coach. Use the trader profile, saved trades, rules, mistakes, and base models to produce improved trading models. Each model needs: name, market condition, required confirmations, invalidation, pass condition, review question, and what data to collect next. Do not give financial advice.",
@@ -112,3 +112,4 @@ exports.handler = async event => {
     return json(error.status || 500, { error: error.message || "AI request failed." });
   }
 };
+
